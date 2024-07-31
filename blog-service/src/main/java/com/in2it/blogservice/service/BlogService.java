@@ -8,12 +8,11 @@ public interface BlogService {
 	
 	
 	BlogDto saveBlog(BlogDto blogDto);
-	BlogDto getByid(int id);
-	BlogDto updateBlog(BlogDto blogDto, int id);
+	BlogDto updateBlog(BlogDto blogDto, Long id);
+	void deleteBlog(Long id);
+	BlogDto getByid(Long id);
 	BlogDto getBlogByTitle(String title);
 	List<BlogDto> getAllBlog();
-	void deleteBlog(int id);
-	
 	List<BlogDto> getByUserName(String userName);
 	
 
