@@ -50,11 +50,7 @@ public class BlogServiceImpl implements BlogService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-//	public Blog dtoToBlogConverter(BlogDto dto)
-//	{
-//		Blog blog=new Blog();
-//		blog.se
-//	}
+
 
 
 }
