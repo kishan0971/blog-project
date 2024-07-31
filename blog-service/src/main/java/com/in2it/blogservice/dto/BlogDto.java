@@ -16,12 +16,21 @@ import lombok.NoArgsConstructor;
 public class BlogDto {
 	
 	
-	private Long id;
+	private long bId;
 	private String title;
 	private String content;
+	private String visiblity;
+	private int commentCount;
+	private int likeCount;
 	private String media;
+	private String postedBy;
+	private LocalDateTime cDateTime;
+	private LocalDateTime dDateTime;
+	@Override
+	public String toString() {
+		return "BlogDto [bId=" + bId + ", title=" + title + ", content=" + content + ", visiblity=" + visiblity
+				+ ", commentCount=" + commentCount + ", likeCount=" + likeCount + ", media=" + media + ", postedBy="
+				+ postedBy + ", cDateTime=" + cDateTime + ", dDateTime=" + dDateTime + "]";
+	} 
 	
-	private LocalDateTime createdDate;
-	
-
 }

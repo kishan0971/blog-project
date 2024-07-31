@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,21 +22,31 @@ import lombok.NoArgsConstructor;
 public class Blog {
 	
 	@Id
-	private long id;
+	@GeneratedValue(strategy =  GenerationType.AUTO)
+	private long bId;
 	private String title;
 	private String content;
-
-	
-	
 	private String visiblity;
-	
 	private int commentCount;
-	private List<Like> likes = new ArrayList<>();
+	private int likeCount;
+	private String media;
+	private String postedBy;
+	private LocalDateTime cDateTime;
+	private LocalDateTime dDateTime; 
 	
+	@Transient
+	private List<Like> likes = new ArrayList<>();
+	@Transient
 	private List<Comment> comments = new ArrayList<>();
+	@Override
+	public String toString() {
+		return "Blog [bId=" + bId + ", title=" + title + ", content=" + content + ", visiblity=" + visiblity
+				+ ", commentCount=" + commentCount + ", likeCount=" + likeCount + ", media=" + media + ", postedBy="
+				+ postedBy + ", cDateTime=" + cDateTime + ", dDateTime=" + dDateTime + "]";
+	}
 
 
-	private LocalDateTime createdDate;
+	
 
 
 
