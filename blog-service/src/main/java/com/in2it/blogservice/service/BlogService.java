@@ -14,5 +14,7 @@ public interface BlogService {
 	List<BlogDto> getAllBlog();
 	void deleteBlog(int id);
 	
+	List<BlogDto> getByUserName(String userName);
+	
 
 }
