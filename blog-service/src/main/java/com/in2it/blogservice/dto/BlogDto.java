@@ -7,12 +7,12 @@ import java.time.LocalTime;
 public class BlogDto {
 	
 	
-	private int id;
+	private Long id;
 	private String title;
 	private String content;
 	private String media;
 	
-	private LocalDate createdDate;
-	private LocalTime creationTime;
+	private LocalDateTime createdDate;
+	
 
 }
