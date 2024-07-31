@@ -1,5 +1,8 @@
 package com.in2it.commentandlikeservice.service;
 
-public class LikeService {
+import org.springframework.stereotype.Service;
+
+@Service
+public interface LikeService {
 
 }
