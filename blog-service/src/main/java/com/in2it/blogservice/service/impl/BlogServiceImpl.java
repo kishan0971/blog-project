@@ -25,17 +25,9 @@ public class BlogServiceImpl implements BlogService {
 		
 	}
 
-	@Override
-	public BlogDto getByid(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	@Override
-	public BlogDto getBlogByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public List<BlogDto> getAllBlog() {
@@ -45,6 +37,20 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public List<BlogDto> getByUserName(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	@Override
+	public List<BlogDto> getBlogByTitle(String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BlogDto getBlogByid(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
