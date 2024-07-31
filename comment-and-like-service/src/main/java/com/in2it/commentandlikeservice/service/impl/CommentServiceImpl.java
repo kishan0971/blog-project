@@ -1,5 +1,11 @@
 package com.in2it.commentandlikeservice.service.impl;
 
-public class CommentServiceImpl {
+import org.springframework.stereotype.Service;
+
+import com.in2it.commentandlikeservice.service.CommentService;
+
+
+@Service
+public class CommentServiceImpl implements CommentService {
 
 }

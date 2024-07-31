@@ -13,7 +13,14 @@ public class Comment {
 	
 	private long id;
 	private String content;
-	
 	private String media;
+	private long blogId;
+	private long authorID;
+	
+	
+	
+	private Blog blog;
+	
+	private Author author;
 
 }
