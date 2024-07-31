@@ -22,6 +22,15 @@ public class Blog {
 	private String title;
 	private String content;
 	private String media;
+	
+	
+	private String visiblity;
+	
+	private int commentCount;
+	private List<Like> likes = new ArrayList<>();
+	
+	private List<Comment> comments = new ArrayList<>();
+
 
 
 }
