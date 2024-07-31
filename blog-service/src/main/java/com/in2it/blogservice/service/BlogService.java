@@ -11,7 +11,7 @@ public interface BlogService {
 	BlogDto updateBlog(BlogDto blogDto, Long id);
 	void deleteBlog(Long id);
 	BlogDto getByid(Long id);
-	BlogDto getBlogByTitle(String title);
+	List<BlogDto> getBlogByTitle(String title);
 	List<BlogDto> getAllBlog();
 	List<BlogDto> getByUserName(String userName);
 	
