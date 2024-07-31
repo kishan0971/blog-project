@@ -1,7 +1,6 @@
 package com.in2it.blogservice.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -22,6 +21,7 @@ public class Blog {
 	private String title;
 	private String content;
 	private String media;
+	private LocalDateTime createdDate;
 
 
 }
