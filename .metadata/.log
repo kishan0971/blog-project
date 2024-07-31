@@ -31,3 +31,45 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-07-31 11:13:40.588
+!MESSAGE Classpath changed for project: blog-service
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-07-31 11:13:40.589
+!MESSAGE Boot project ADDED: blog-service
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-07-31 11:13:40.590
+!MESSAGE Starting Boot LS...
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-07-31 11:13:40.627
+!MESSAGE Started Boot LS process
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-07-31 11:13:40.646
+!MESSAGE Command list starting LS: org.springframework.tooling.boot.ls
+START:
+D:\New folder\sts-4.22.0.RELEASE\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.10.v20240120-1143\jre\bin\javaw.exe
+-cp
+D:\New folder\sts-4.22.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.53.0.202403071323\servers\spring-boot-language-server\BOOT-INF\classes;D:\New folder\sts-4.22.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.53.0.202403071323\servers\spring-boot-language-server\BOOT-INF\lib\*
+-Dsts.lsp.client=eclipse
+-Dlsp.completions.indentation.enable=true
+-Xmx1024m
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:TieredStopAtLevel=1
+-Xlog:jni+resolve=off
+-Dspring.config.location=file:D:\New folder\sts-4.22.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.53.0.202403071323\servers\spring-boot-language-server\BOOT-INF\classes\application.properties
+-XX:ErrorFile=D:/blog-workspace/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1722404620645
+org.springframework.ide.vscode.boot.app.BootLanguageServerBootApp
+--languageserver.hover-timeout=225
+END
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-07-31 11:13:40.647
+!MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-07-31 11:13:40.658
+!MESSAGE Started org.springframework.tooling.boot.ls LS process 3248
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-07-31 11:14:41.232
+!MESSAGE Classpath changed for project: comment-and-like-service
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-07-31 11:14:41.233
+!MESSAGE Boot project ADDED: comment-and-like-service
