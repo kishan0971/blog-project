@@ -25,9 +25,7 @@ public class BlogServiceImpl implements BlogService {
 		
 	}
 
-	
 
-	
 
 	@Override
 	public List<BlogDto> getAllBlog() {
