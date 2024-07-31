@@ -4,15 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+//kfhafagftaufhui
 public class BlogDto {
 	
 	
-	private int id;
+	private Long id;
 	private String title;
 	private String content;
 	private String media;
 	
-	private LocalDate createdDate;
-	private LocalTime creationTime;
+	private LocalDateTime createdDate;
+	
 
 }
