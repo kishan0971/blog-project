@@ -1,8 +1,5 @@
 package com.in2it.commentandlikeservice.dto;
 
-import com.in2it.commentandlikeservice.model.Author;
-import com.in2it.commentandlikeservice.model.Blog;
-
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
