@@ -1,5 +1,10 @@
 package com.in2it.commentandlikeservice.model;
 
+import java.util.Date;
+
+import com.in2it.commentandlikeservice.dto.Author;
+import com.in2it.commentandlikeservice.dto.Blog;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
@@ -17,7 +22,7 @@ public class Comment {
 	private String media;
 	private long blogId;
 	private long authorID;
-	
+	private Date date;
 	
 	@Transient
 	private Blog blog;

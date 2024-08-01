@@ -1,5 +1,8 @@
 package com.in2it.commentandlikeservice.model;
 
+import com.in2it.commentandlikeservice.dto.Author;
+import com.in2it.commentandlikeservice.dto.Blog;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
