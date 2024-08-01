@@ -17,11 +17,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BlogDto {
 	
-	
+	@NotNull
 	private long id;
-	
+	@NotNull
 	private long departmentId;
-	
+	@NotNull
 	private long projectId;
 	
 	@Size(max = 50,min = 2,message = "title must not be longer than 50 characters and not be less than 3 characters")
