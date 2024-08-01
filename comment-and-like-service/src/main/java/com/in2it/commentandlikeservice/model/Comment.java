@@ -6,6 +6,7 @@ import com.in2it.commentandlikeservice.dto.Author;
 import com.in2it.commentandlikeservice.dto.Blog;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,9 +24,11 @@ public class Comment {
 	private long authorID;
 	private Date date;
 	
-	
+	@Transient
 	private Blog blog;
 	
+	
+	@Transient
 	private Author author;
 
 }

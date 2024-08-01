@@ -3,12 +3,14 @@ package com.in2it.blogservice.service.impl;
 import java.util.List;
 
 import com.in2it.blogservice.dto.BlogDto;
+import com.in2it.blogservice.model.Blog;
 import com.in2it.blogservice.service.BlogService;
 
 public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public BlogDto saveBlog(BlogDto blogDto) {
+		
 		
 		return null;
 	}
@@ -25,17 +27,14 @@ public class BlogServiceImpl implements BlogService {
 		
 	}
 
+
+
 	@Override
-	public BlogDto getByid(Long id) {
+	public List<BlogDto> getBlogByTitle(String title) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public BlogDto getBlogByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<BlogDto> getAllBlog() {
@@ -49,5 +48,10 @@ public class BlogServiceImpl implements BlogService {
 		return null;
 	}
 
+	@Override
+	public BlogDto getBlogByid(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
