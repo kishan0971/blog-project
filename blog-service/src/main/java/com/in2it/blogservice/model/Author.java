@@ -15,7 +15,8 @@ public class Author {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String UserName;
+	private String firstName;
+	private String lastname;
 	private String email;
 	private String contactNumber;
 	private String department;
