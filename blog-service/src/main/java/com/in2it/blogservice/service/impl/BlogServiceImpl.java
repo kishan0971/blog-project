@@ -3,18 +3,12 @@ package com.in2it.blogservice.service.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 
-<<<<<<< HEAD
-
-import com.in2it.blogservice.dto.BlogDto;
-
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.in2it.blogservice.dto.BlogDto;
 import com.in2it.blogservice.mapper.Converter;
 import com.in2it.blogservice.model.Blog;
 import com.in2it.blogservice.repository.BlogRepository;
->>>>>>> c316e027c69735a7ed61103b6276c986464207f1
 import com.in2it.blogservice.service.BlogService;
 
 public class BlogServiceImpl implements BlogService {
@@ -52,6 +46,7 @@ public class BlogServiceImpl implements BlogService {
 //        fout.write(i);
 //    }
     
+	
 	@Override
 	public BlogDto updateBlog(BlogDto blogDto, Long id) {
 		// TODO Auto-generated method stub
@@ -93,15 +88,5 @@ public class BlogServiceImpl implements BlogService {
 		return null;
 	}
 
-<<<<<<< HEAD
 
-	
-=======
-	@Override
-	public BlogDto getBlogByid(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
->>>>>>> c316e027c69735a7ed61103b6276c986464207f1
 }
