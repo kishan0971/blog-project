@@ -28,14 +28,12 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 
-<<<<<<< HEAD
-=======
 	@Override
 	public List<BlogDto> getBlogByTitle(String title) {
 		// TODO Auto-generated method stub
 		return null;
 	}
->>>>>>> b7e78fb2b38560630401e918f909e7ee67f04aeb
+
 
 	@Override
 	public List<BlogDto> getAllBlog() {
@@ -56,11 +54,11 @@ public class BlogServiceImpl implements BlogService {
 
 	
 
-	@Override
-	public List<BlogDto> getBlogByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public List<BlogDto> getBlogByTitle(String title) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	@Override
 	public BlogDto getBlogByid(Long id) {
