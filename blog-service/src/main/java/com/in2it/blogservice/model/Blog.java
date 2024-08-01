@@ -27,7 +27,7 @@ public class Blog {
 	private int commentCount;
 	private int likeCount;
 	private String media;
-	private String postedBy;
+	private long authorId;
 	private LocalDateTime cretedDateTime;
 
 	
