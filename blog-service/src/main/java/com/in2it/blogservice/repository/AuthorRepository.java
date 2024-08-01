@@ -7,6 +7,5 @@ import com.in2it.blogservice.model.Author;
 
 public interface AuthorRepository extends JpaRepository<Author, Long>
 {
-	@Query()
-	Author validateProjectId(long id,long projectId);
+	
 }
