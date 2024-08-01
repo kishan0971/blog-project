@@ -2,8 +2,9 @@ package com.in2it.blogservice.service.impl;
 
 import java.util.List;
 
+
 import com.in2it.blogservice.dto.BlogDto;
-import com.in2it.blogservice.model.Blog;
+
 import com.in2it.blogservice.service.BlogService;
 
 public class BlogServiceImpl implements BlogService {
@@ -22,7 +23,8 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public void deleteBlog(Long id) {
+	public Boolean deleteBlog(Long id) {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}
@@ -30,47 +32,31 @@ public class BlogServiceImpl implements BlogService {
 
 
 	@Override
-	public List<BlogDto> getBlogByTitle(String title) {
+	public List<BlogDto> getBlog(String title) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public List<BlogDto> getAllBlog() {
+	public List<BlogDto> getBlog() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<BlogDto> getByUserName(String userName) {
+	public List<BlogDto> getByAutherName(String auther) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-<<<<<<< HEAD
+
+
+	@Override
+	public BlogDto getBlog(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	
-//	public Blog dtoToBlogConverter(BlogDto dto)
-//	{
-//		Blog blog=new Blog();
-//		blog.se
-//	}
-=======
-
-
-	
-
-	@Override
-	public List<BlogDto> getBlogByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BlogDto getBlogByid(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
->>>>>>> 9e063c74ec9f5300c7793f29b18bd39f189091d1
-
-
 }

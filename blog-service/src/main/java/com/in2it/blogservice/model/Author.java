@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 public class Author {
 	
 	private long id;
-	private String firstName;
-	private String lastname;
+	private String UserName;
 	private String email;
 	private String contactNumber;
 	private String department;
