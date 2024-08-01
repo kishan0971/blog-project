@@ -1,5 +1,6 @@
 package com.in2it.blogservice.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class BlogServiceImpl implements BlogService {
 	
 	@Override
 	public BlogDto saveBlog(BlogDto blogDto) {
+		
+		blogDto.setCretedDateTime(LocalDateTime.now());
 		Blog blog=repo.save(objectMapper.dtoToBlogConverter(blogDto));
 		
 		

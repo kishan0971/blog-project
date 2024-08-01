@@ -33,19 +33,8 @@ public class Blog {
 	private int commentCount;
 	private int likeCount;
 	private String media;
-
+	@NotNull
 	private long authorId;
 
 	private LocalDateTime cretedDateTime;
-
-	
-	
-	
-	
-
-
-	
-
-
-
 }
