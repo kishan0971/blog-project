@@ -4,6 +4,7 @@ package com.in2it.blogservice.dto;
 import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,7 @@ public class BlogDto {
 	private int commentCount;
 	private int likeCount;
 	private String media;
+	@NotNull
 	private long authorId;
 	private LocalDateTime cretedDateTime;
 	

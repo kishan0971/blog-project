@@ -36,7 +36,7 @@ public class Blog {
 
 	@NotNull
 	private String postedBy;
-
+	@NotNull
 	private long authorId;
 
 	private LocalDateTime cretedDateTime;
