@@ -35,7 +35,13 @@ public class BlogDto {
 	private String media;
 	@NotNull
 	private long authorId;
-	private LocalDateTime cretedDateTime;
-	
-	
+	private LocalDateTime createdDateTime;
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
 }

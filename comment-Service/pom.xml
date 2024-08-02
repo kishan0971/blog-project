@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.in2it</groupId>
-	<artifactId>comment-and-like-service</artifactId>
+	<artifactId>Like-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>comment-and-like-service</name>
 	<description>Blog service project</description>

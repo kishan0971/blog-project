@@ -1,4 +1,4 @@
-package com.in2it.commentandlikeservice.controller;
+package com.in2it.commentandlikeservice.Commentcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.in2it.commentandlikeservice.model.Comment;
-import com.in2it.commentandlikeservice.service.CommentService;
+import com.in2it.commentandlikeservice.Commentservice.CommentService;
 
 @RestController
 @RequestMapping("/comment")

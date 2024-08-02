@@ -10,7 +10,9 @@ import com.in2it.blogservice.mapper.Converter;
 import com.in2it.blogservice.model.Blog;
 import com.in2it.blogservice.repository.BlogRepository;
 import com.in2it.blogservice.service.BlogService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BlogServiceImpl implements BlogService {
 
 	@Autowired
@@ -22,11 +24,9 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public BlogDto saveBlog(BlogDto blogDto) {
 		
-		blogDto.setCretedDateTime(LocalDateTime.now());
+		blogDto.setCreatedDateTime(LocalDateTime.now());
 		Blog blog=repo.save(objectMapper.dtoToBlogConverter(blogDto));
-		
-		
-		return objectMapper.blogToDtoConverter(blog);
+	return objectMapper.blogToDtoConverter(blog);
 	}
 	
 ////	write
@@ -84,8 +84,9 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public BlogDto getBlog(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	Blog blog=repo.findById(id).orElse(null);
+		BlogDto blogDto =objectMapper.blogToDtoConverter(blog);
+	  return blogDto;
 	}
 
 

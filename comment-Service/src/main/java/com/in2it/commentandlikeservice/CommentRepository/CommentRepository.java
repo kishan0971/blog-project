@@ -1,4 +1,4 @@
-package com.in2it.commentandlikeservice.repository;
+package com.in2it.commentandlikeservice.CommentRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

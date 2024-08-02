@@ -1,4 +1,4 @@
-package com.in2it.commentandlikeservice.service;
+package com.in2it.commentandlikeservice.Commentservice;
 
 import com.in2it.commentandlikeservice.model.Comment;
 

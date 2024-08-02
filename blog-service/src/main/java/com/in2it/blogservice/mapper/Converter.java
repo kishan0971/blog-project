@@ -2,7 +2,10 @@ package com.in2it.blogservice.mapper;
 
 import com.in2it.blogservice.dto.BlogDto;
 import com.in2it.blogservice.model.Blog;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Converter {
 
 	public Blog dtoToBlogConverter(BlogDto dto)
@@ -16,7 +19,7 @@ public class Converter {
 
 		//set to current date&time
 //		blog.setCretedDateTime(LocalDateTime.now());
-		blog.setCretedDateTime(dto.getCretedDateTime());
+		blog.setCreatedDateTime(dto.getCreatedDateTime());
 		
 		//set to initial value 
 //		blog.setLikeCount(0);
@@ -41,7 +44,7 @@ public class Converter {
 		dto.setVisiblity(blog.getVisiblity());
 
 		//set to current date&time
-		dto.setCretedDateTime(blog.getCretedDateTime());
+		dto.setCreatedDateTime(blog.getCreatedDateTime());
 		
 		//set to initial value 
 		dto.setLikeCount(blog.getLikeCount());

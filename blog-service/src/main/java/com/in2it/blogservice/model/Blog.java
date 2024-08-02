@@ -36,5 +36,13 @@ public class Blog {
 	@NotNull
 	private long authorId;
 
-	private LocalDateTime cretedDateTime;
+	private LocalDateTime createdDateTime;
+
+	public LocalDateTime getCreatedDateTime() {
+		return createdDateTime;
+	}
+
+	public void setCreatedDateTime(LocalDateTime createdDateTime) {
+		this.createdDateTime = createdDateTime;
+	}
 }

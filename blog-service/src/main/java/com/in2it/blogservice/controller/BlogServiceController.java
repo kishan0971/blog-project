@@ -3,6 +3,9 @@ package com.in2it.blogservice.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.in2it.blogservice.service.BlogService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +26,8 @@ import jakarta.validation.Valid;
 @RequestMapping("/in2it-blog")
 public class BlogServiceController {
 
-	private BlogServiceImpl serviceImpl;
+    @Autowired
+	private BlogService serviceImpl;
 
 	/*
 	 * This method is used to insert blog in database.
@@ -66,7 +70,7 @@ public class BlogServiceController {
 
 	// pagination
 	@GetMapping("/get/{blogId}")
-	public ResponseEntity<?> getBlog(@PathVariable(value = "blogId") @Valid Long id) {
+	public ResponseEntity<BlogDto> getBlog(@PathVariable(value = "blogId") @Valid Long id) {
 
 		BlogDto blog = serviceImpl.getBlog(id);
 		
@@ -76,7 +80,7 @@ public class BlogServiceController {
 
 		} else {
 
-			return  ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+			return  ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 
 	}
