@@ -1,5 +1,10 @@
 package com.in2it.blogservice.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.in2it.blogservice.dto.BlogDto;
 import com.in2it.blogservice.model.Blog;
 
@@ -10,7 +15,13 @@ public class Converter {
 		Blog blog=new Blog();
 		blog.setContent(dto.getContent());
 		blog.setAuthorId(dto.getAuthorId());
-		blog.setMedia(dto.getMedia());
+		List<String> mediaNames=new ArrayList<>();
+		for(MultipartFile file:dto.getMedia())
+		{
+			mediaNames.add(file.getName());
+		}
+		
+		blog.setMedia(mediaNames);
 		blog.setTitle(dto.getTitle());
 		blog.setVisiblity(dto.getVisiblity());
 
@@ -24,8 +35,7 @@ public class Converter {
 		
 		blog.setLikeCount(dto.getLikeCount());
 		blog.setCommentCount(dto.getCommentCount());
-		blog.setDepartmentId(dto.getDepartmentId());
-		blog.setProjectId(dto.getProjectId());
+		
 		
 		return blog;
 	}
@@ -36,7 +46,7 @@ public class Converter {
 		dto.setId(blog.getId());
 		dto.setContent(blog.getContent());
 		dto.setAuthorId(blog.getAuthorId());
-		dto.setMedia(blog.getMedia());
+//		dto.setMedia (blog.getMedia());
 		dto.setTitle(blog.getTitle());
 		dto.setVisiblity(blog.getVisiblity());
 
@@ -46,8 +56,7 @@ public class Converter {
 		//set to initial value 
 		dto.setLikeCount(blog.getLikeCount());
 		dto.setCommentCount(blog.getCommentCount());
-		dto.setDepartmentId(blog.getDepartmentId());
-		dto.setProjectId(blog.getProjectId());
+		
 		
 		
 		return dto;

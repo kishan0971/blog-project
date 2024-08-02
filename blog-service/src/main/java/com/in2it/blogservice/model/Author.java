@@ -3,6 +3,7 @@ package com.in2it.blogservice.model;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,10 @@ public class Author {
 	private String contactNumber;
 	private String department;
 	private long managerId;
+	@NotNull
+	private long departmentId;
+	@NotNull
+	private long projectId;
 	
 
 }

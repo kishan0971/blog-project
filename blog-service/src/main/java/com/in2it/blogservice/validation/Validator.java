@@ -18,10 +18,10 @@ public class Validator {
 		else 
 			return true;
 	}
-	public boolean validateId(long id)
+	public boolean validateProjectId(long id,int pId)
 	{
 		Author author= authorRepo.getById(id);
-		if(author==null)
+		if(author.get==null)
 			return false;
 		else 
 			return true;

@@ -11,6 +11,7 @@ import com.in2it.blogservice.customException.IdInvalidException;
 import com.in2it.blogservice.customException.UserNotFoundException;
 import com.in2it.blogservice.dto.BlogDto;
 import com.in2it.blogservice.mapper.Converter;
+import com.in2it.blogservice.model.Author;
 import com.in2it.blogservice.model.Blog;
 import com.in2it.blogservice.repository.AuthorRepository;
 import com.in2it.blogservice.repository.BlogRepository;
@@ -36,7 +37,22 @@ public class BlogServiceImpl implements BlogService {
 		return objectMapper.blogToDtoConverter(blog);
 	}
 
-
+////	write
+//	String path = getServletContext().getRealPath("image");
+//    MultipartRequest mpr = new MultipartRequest(req, path, 500 * 1024 * 1024);
+//    String path1 = mpr.getOriginalFileName("img");
+//    String path2 = path + "/" + path1;
+//    FileInputStream fis = new FileInputStream(path2);
+//
+////    read
+//    String path=request.getServletContext().getRealPath("/");
+// 	InputStream f=rec.getBinaryStream("img");
+//	FileOutputStream fout=new FileOutputStream(path+"\\"+"profile"+rec.getInt(1)+".png");
+//	int i=0;
+//    while((i=f.read())!=-1)
+//    {
+//        fout.write(i);
+//    }
 
 	@Override
 	public BlogDto updateBlog(BlogDto blogDto, Long id) {
