@@ -26,6 +26,9 @@ public class Blog {
 	private long departmentId;
 	private long projectId;
 	@NotNull
+	private long authorId;
+	
+	@NotNull
 	private String title;
 	@NotNull
 	private String content;
@@ -36,8 +39,7 @@ public class Blog {
 	
 	private List<String> media;
 	
-	@NotNull
-	private long authorId;
+	
 
 	private LocalDateTime cretedDateTime;
 }

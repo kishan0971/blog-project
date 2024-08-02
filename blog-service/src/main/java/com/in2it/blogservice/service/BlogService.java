@@ -2,8 +2,10 @@ package com.in2it.blogservice.service;
 
 import java.util.List;
 
-import com.in2it.blogservice.dto.BlogDto;
+import org.springframework.stereotype.Component;
 
+import com.in2it.blogservice.dto.BlogDto;
+@Component
 public interface BlogService {
 	
 	
@@ -11,8 +13,8 @@ public interface BlogService {
 	BlogDto updateBlog(BlogDto blogDto, Long id);
 	Boolean deleteBlog(Long id);
 	
-	BlogDto getBlog(Long id);
-	List<BlogDto> getBlog(String title);
+	BlogDto getBlogById(Long id);
+	List<BlogDto> getBlogTitle(String title);
 	List<BlogDto> getBlog();
 	List<BlogDto> getByAutherID(long id);
 	

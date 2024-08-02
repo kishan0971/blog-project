@@ -1,16 +1,19 @@
 package com.in2it.blogservice.mapper;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.in2it.blogservice.dto.BlogDto;
 import com.in2it.blogservice.model.Blog;
 
+@Component
 public class Converter {
 
-	
+
 	public Blog dtoToBlogConverter(BlogDto dto)
 	{
 		Blog blog=new Blog();
@@ -28,8 +31,8 @@ public class Converter {
 
 		
 		//set to current date&time
-//		blog.setCretedDateTime(LocalDateTime.now());
-		blog.setCretedDateTime(dto.getCretedDateTime());
+		blog.setCretedDateTime(LocalDateTime.now());
+//		blog.setCretedDateTime(dto.getCretedDateTime());
 		
 //		blog.setProjectId(author.getProjectId());
 //		blog.setDepartmentId(author.getDepartmentId());
@@ -55,7 +58,8 @@ public class Converter {
 //		dto.setMedia (blog.getMedia());
 		dto.setTitle(blog.getTitle());
 		dto.setVisiblity(blog.getVisiblity());
-
+		dto.setProjectId(blog.getProjectId());
+		dto.setDepartmentId(blog.getDepartmentId());
 		//set to current date&time
 		dto.setCretedDateTime(blog.getCretedDateTime());
 		

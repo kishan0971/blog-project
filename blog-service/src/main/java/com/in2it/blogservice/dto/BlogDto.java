@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BlogDto {
 	
-	@NotNull
+   
 	private long id;
 	@NotNull
 	private long departmentId;

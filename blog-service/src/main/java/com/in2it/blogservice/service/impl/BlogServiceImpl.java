@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.in2it.blogservice.customException.IdInvalidException;
@@ -19,6 +21,8 @@ import com.in2it.blogservice.model.Blog;
 import com.in2it.blogservice.repository.BlogRepository;
 import com.in2it.blogservice.service.BlogService;
 
+@Service
+@Component
 public class BlogServiceImpl implements BlogService {
 
 	@Autowired
@@ -96,7 +100,7 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public List<BlogDto> getBlog(String title) {
+	public List<BlogDto> getBlogTitle(String title) {
 
 		List<Blog> blog = repo.findByTitle(title);
 
@@ -140,13 +144,27 @@ public class BlogServiceImpl implements BlogService {
 
 
 	public List<BlogDto> getByAutherID(long id) {
-		// TODO Auto-generated method stub
+		
+		List<Blog> byAuthorId = repo.findByAuthorId(id);
+		
+		List<BlogDto> blogDtoList = new ArrayList<>();
 
-		return null;
+		for (Blog blog2 : byAuthorId) {
+
+			if (blog2 != null) {
+				BlogDto blogToDtoConverter = objectMapper.blogToDtoConverter(blog2);
+				blogDtoList.add(blogToDtoConverter);
+			} else {
+				throw new UserNotFoundException(
+						HttpStatus.NO_CONTENT + "Content not available, please ! Try again.");
+			}
+		}
+		
+		return blogDtoList;
 	}
 
 	@Override
-	public BlogDto getBlog(Long id) {
+	public BlogDto getBlogById(Long id) {
 
 		Blog blog = repo.findById(id).orElseThrow(() -> new IdInvalidException("Please ! correct id ."));
 		if (blog != null) {
