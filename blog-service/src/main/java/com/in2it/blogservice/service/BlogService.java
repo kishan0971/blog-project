@@ -14,7 +14,7 @@ public interface BlogService {
 	BlogDto getBlog(Long id);
 	List<BlogDto> getBlog(String title);
 	List<BlogDto> getBlog();
-	List<BlogDto> getByAutherName(String auther);
+	List<BlogDto> getByAutherID(long id);
 	
 
 }

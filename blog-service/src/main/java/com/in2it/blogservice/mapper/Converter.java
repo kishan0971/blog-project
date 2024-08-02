@@ -10,6 +10,7 @@ import com.in2it.blogservice.model.Blog;
 
 public class Converter {
 
+	
 	public Blog dtoToBlogConverter(BlogDto dto)
 	{
 		Blog blog=new Blog();
@@ -24,10 +25,15 @@ public class Converter {
 		blog.setTitle(dto.getTitle());
 		blog.setVisiblity(dto.getVisiblity());
 
+		
 		//set to current date&time
 //		blog.setCretedDateTime(LocalDateTime.now());
 		blog.setCretedDateTime(dto.getCretedDateTime());
 		
+//		blog.setProjectId(author.getProjectId());
+//		blog.setDepartmentId(author.getDepartmentId());
+		blog.setProjectId(dto.getProjectId());
+		blog.setDepartmentId(dto.getDepartmentId());
 		//set to initial value 
 //		blog.setLikeCount(0);
 //		blog.setCommentCount(0);

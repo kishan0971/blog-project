@@ -3,11 +3,11 @@ package com.in2it.blogservice.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.in2it.blogservice.dto.BlogDto;
 import com.in2it.blogservice.mapper.Converter;
@@ -22,6 +22,8 @@ public class BlogServiceImpl implements BlogService {
 	
 	@Autowired
 	private BlogRepository repo;
+//	@Autowired
+//	private AuthorRepository authorRepo;
 	
 	@Override
 	public BlogDto saveBlog(BlogDto blogDto) {
@@ -30,18 +32,23 @@ public class BlogServiceImpl implements BlogService {
 		blogDto.setCretedDateTime(LocalDateTime.now());
 		blogDto.setLikeCount(0);
 		blogDto.setCommentCount(0);
+//		Author author=authorRepo.getById(blogDto.getAuthorId());
+		
 		Blog blog=repo.save(objectMapper.dtoToBlogConverter(blogDto));
 		
 		File file=new File("image");
 		String path1=null;
 	    if(file.isDirectory())
 	    {
-	    	try {
-			String path=file.getAbsolutePath();
-			System.out.println("Current directory path = "+path);
-			path1=path+"/"+blogDto.getMedia().getOriginalFilename().;
-			
-				FileInputStream fis=new FileInputStream(path1);
+	    	try 
+	    	{
+				String path=file.getAbsolutePath();
+				System.out.println("Current directory path = "+path);
+				for(MultipartFile f1:blogDto.getMedia())
+				{
+					path1=path+"/"+f1.getOriginalFilename();
+					FileInputStream fis=new FileInputStream(path1);
+				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -103,7 +110,7 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public List<BlogDto> getByAutherName(String auther) {
+	public List<BlogDto> getByAutherID(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
