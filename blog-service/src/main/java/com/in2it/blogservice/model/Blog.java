@@ -1,6 +1,9 @@
 package com.in2it.blogservice.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,9 +35,11 @@ public class Blog {
 	private String visiblity;
 	private int commentCount;
 	private int likeCount;
-	private String media;
+	private List<String> media;
 	@NotNull
 	private long authorId;
+	private long deletedBy;
+	private LocalDateTime deletedAt;
 
 	private LocalDateTime cretedDateTime;
 }

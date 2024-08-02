@@ -1,5 +1,9 @@
 package com.in2it.blogservice.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,11 +26,34 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public BlogDto saveBlog(BlogDto blogDto) {
 		
+		
 		blogDto.setCretedDateTime(LocalDateTime.now());
+		blogDto.setLikeCount(0);
+		blogDto.setCommentCount(0);
 		Blog blog=repo.save(objectMapper.dtoToBlogConverter(blogDto));
 		
+		File file=new File("image");
+		String path1=null;
+	    if(file.isDirectory())
+	    {
+	    	try {
+			String path=file.getAbsolutePath();
+			System.out.println("Current directory path = "+path);
+			path1=path+"/"+blogDto.getMedia().getOriginalFilename().;
+			
+				FileInputStream fis=new FileInputStream(path1);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
 		
 		return objectMapper.blogToDtoConverter(blog);
+	}
+	
+	public  void storeImage()
+	{
+		
 	}
 	
 ////	write
@@ -46,6 +73,7 @@ public class BlogServiceImpl implements BlogService {
 //        fout.write(i);
 //    }
     
+	
 	@Override
 	public BlogDto updateBlog(BlogDto blogDto, Long id) {
 		// TODO Auto-generated method stub
@@ -53,7 +81,8 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public void deleteBlog(Long id) {
+	public Boolean deleteBlog(Long id) {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}
@@ -61,28 +90,30 @@ public class BlogServiceImpl implements BlogService {
 
 
 	@Override
-	public List<BlogDto> getBlogByTitle(String title) {
+	public List<BlogDto> getBlog(String title) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public List<BlogDto> getAllBlog() {
+	public List<BlogDto> getBlog() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<BlogDto> getByUserName(String userName) {
+	public List<BlogDto> getByAutherName(String auther) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+
 	@Override
-	public BlogDto getBlogByid(Long id) {
+	public BlogDto getBlog(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

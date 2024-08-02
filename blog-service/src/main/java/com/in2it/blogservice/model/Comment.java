@@ -20,10 +20,12 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String content;
+
 	private String media;
 	private long blogId;
 	private long authorID;
 	private Date date;
+
 
 
 
