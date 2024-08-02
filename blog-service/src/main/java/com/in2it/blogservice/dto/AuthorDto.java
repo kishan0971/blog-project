@@ -1,8 +1,6 @@
-package com.in2it.blogservice.model;
+package com.in2it.blogservice.dto;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Author {
+public class AuthorDto {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private long id;
 	private String firstName;
 	private String lastname;
@@ -21,6 +18,10 @@ public class Author {
 	private String contactNumber;
 	private String department;
 	private long managerId;
+	@NotNull
+	private long departmentId;
+	@NotNull
+	private long projectId;
 	
 
 }
