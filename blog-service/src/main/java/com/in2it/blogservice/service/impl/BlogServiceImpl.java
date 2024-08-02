@@ -1,11 +1,21 @@
 package com.in2it.blogservice.service.impl;
 
+<<<<<<< HEAD
+=======
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+>>>>>>> 6a656c08de5666159a6db4dbd599f361efc67e17
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
+=======
+import org.springframework.web.multipart.MultipartFile;
+>>>>>>> 6a656c08de5666159a6db4dbd599f361efc67e17
 
 import com.in2it.blogservice.customException.IdInvalidException;
 import com.in2it.blogservice.customException.UserNotFoundException;
@@ -24,6 +34,8 @@ public class BlogServiceImpl implements BlogService {
 
 	@Autowired
 	private BlogRepository repo;
+//	@Autowired
+//	private AuthorRepository authorRepo;
 	
 	@Autowired
 	private AuthorRepository authRepo;
@@ -32,8 +44,36 @@ public class BlogServiceImpl implements BlogService {
 	public BlogDto saveBlog(BlogDto blogDto) {
 
 		blogDto.setCretedDateTime(LocalDateTime.now());
+<<<<<<< HEAD
 		Blog blog = repo.save(objectMapper.dtoToBlogConverter(blogDto));
 
+=======
+		blogDto.setLikeCount(0);
+		blogDto.setCommentCount(0);
+//		Author author=authorRepo.getById(blogDto.getAuthorId());
+		
+		Blog blog=repo.save(objectMapper.dtoToBlogConverter(blogDto));
+		
+		File file=new File("image");
+		String path1=null;
+	    if(file.isDirectory())
+	    {
+	    	try 
+	    	{
+				String path=file.getAbsolutePath();
+				System.out.println("Current directory path = "+path);
+				for(MultipartFile f1:blogDto.getMedia())
+				{
+					path1=path+"/"+f1.getOriginalFilename();
+					FileInputStream fis=new FileInputStream(path1);
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+		
+>>>>>>> 6a656c08de5666159a6db4dbd599f361efc67e17
 		return objectMapper.blogToDtoConverter(blog);
 	}
 
@@ -109,6 +149,7 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<BlogDto> getByAutherName(String auther) {
 //		
 //	    List<Author> byFirstName = authRepo.findByFirstName(auther);
@@ -133,6 +174,10 @@ public class BlogServiceImpl implements BlogService {
 ////			}
 ////		}
 //	
+=======
+	public List<BlogDto> getByAutherID(long id) {
+		// TODO Auto-generated method stub
+>>>>>>> 6a656c08de5666159a6db4dbd599f361efc67e17
 		return null;
 	}
 

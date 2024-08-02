@@ -123,10 +123,15 @@ public class BlogServiceController {
 	}
 
 	// pagination
+<<<<<<< HEAD
 	@GetMapping("/get/{userName}")
 	 public	ResponseEntity<List<BlogDto>> getByAutherName(@PathVariable @Valid String userName) {
+=======
+	@GetMapping("/get/{id}")
+	 public	ResponseEntity<?> getByAutherName(@PathVariable @Valid long id) {
+>>>>>>> 6a656c08de5666159a6db4dbd599f361efc67e17
 		
-		List<BlogDto> byAutherName = serviceImpl.getByAutherName(userName);
+		List<BlogDto> byAutherName = serviceImpl.getByAutherID(id);
 		
 		if(!byAutherName.isEmpty()) {
 
