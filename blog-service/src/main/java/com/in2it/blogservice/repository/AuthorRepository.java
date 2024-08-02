@@ -4,9 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.in2it.blogservice.model.Author;
+import java.util.List;
+
 
 public interface AuthorRepository extends JpaRepository<Author, Long>
 {
 	@Query()
 	Author validateProjectId(long id,long projectId);
+	
+	 List<Author> findByFirstName(String firstName);
 }
