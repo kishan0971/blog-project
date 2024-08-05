@@ -39,14 +39,15 @@ public class BlogServiceImpl implements BlogService {
 	public BlogDto saveBlog(BlogDto blogDto) {
 
 		blogDto.setCretedDateTime(LocalDateTime.now());
+	Blog dd	=objectMapper.dtoToBlogConverter(blogDto);
 
-		Blog blog = repo.save(objectMapper.dtoToBlogConverter(blogDto));
+		Blog blog = repo.save(dd);
 
-		blogDto.setLikeCount(0);
-		blogDto.setCommentCount(0);
+//	blogDto.setLikeCount(0);
+//		blogDto.setCommentCount(0);
 //		Author author=authorRepo.getById(blogDto.getAuthorId());
 		
-		Blog save = repo.save(objectMapper.dtoToBlogConverter(blogDto));
+		//Blog save = repo.save(objectMapper.dtoToBlogConverter(blogDto));
 		
 		File file=new File("image");
 		String path1=null;
