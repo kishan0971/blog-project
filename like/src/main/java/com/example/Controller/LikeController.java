@@ -20,8 +20,12 @@ public class LikeController {
     @PutMapping("/post/{blogid}/{userid}")
     private ResponseEntity<Like> blogLike(@PathVariable("blogid") long blogid , @PathVariable("userid") long userid){
      Like like=likeService.likepost(blogid, userid);
-        return ResponseEntity.status(HttpStatus.OK).body(like);
-
+       if (like != null) {
+            return ResponseEntity.status(HttpStatus.OK).body("user liked this blog ");
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("user unliked this blog ");
+        }
+    }
     }
 
 //    @GetMapping("/byblogid/{blogid}")
