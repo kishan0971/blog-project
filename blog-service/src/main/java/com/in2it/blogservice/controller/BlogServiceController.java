@@ -68,6 +68,12 @@ public class BlogServiceController {
 		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlog(id));
 	
 	}
+	
+	@DeleteMapping("/deleteByTitle/{title}")
+	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title){
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlogByTitle(title));
+	}
+	
 
 	// pagination
 	

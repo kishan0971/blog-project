@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.in2it.blogservice.customException.IdInvalidException;
+import com.in2it.blogservice.customException.InfoMissingException;
 import com.in2it.blogservice.customException.UserNotFoundException;
 import com.in2it.blogservice.dto.BlogDto;
 import com.in2it.blogservice.mapper.Converter;
@@ -89,16 +90,30 @@ public class BlogServiceImpl implements BlogService {
 		
 		if(id>0) {
 		 repo.deleteBlogById(id);
+
 		return	true;
 		}
 		else {
 		
-			throw new IdInvalidException("id not found, Please ! enter correct id.");
+			throw new IdInvalidException(HttpStatus.NO_CONTENT  + "id not found, Please ! enter correct id.");
 		}
 		
 
 	}
 
+
+	@Override
+	public Boolean deleteBlogByTitle(String title) {
+		
+		if(title!=null) {
+			repo.deleteBytitle(title);
+			return	true;
+		}
+		else {
+			
+			throw new InfoMissingException(HttpStatus.NO_CONTENT  + " Data not found, Please ! try again .");
+		}
+	}
 	
 	@Override
 	public List<BlogDto> getBlogTitle(String title) {
@@ -177,6 +192,10 @@ public class BlogServiceImpl implements BlogService {
 					HttpStatus.NO_CONTENT + "   Data not available, please ! Try again.");
 		}
 	}
+
+
+
+
 	
 	
 	
