@@ -34,4 +34,8 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
 	@Query(value= "update  blog set  status='InActive' where  id=%:id%", nativeQuery = true)
 	 void deleteBlogById(Long id);
 	
+	@Modifying
+	@Query(value= "update  blog set  status='InActive' where  id=%:title%", nativeQuery = true)
+	void deleteBytitle(String title);
+	
 }
