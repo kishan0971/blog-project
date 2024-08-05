@@ -35,10 +35,11 @@ public class BlogDto {
 	private String visiblity;
 	private int commentCount;
 	private int likeCount;
-	private List<MultipartFile> media;
+	private MultipartFile media;
+	private byte[] img;
 	@NotNull
 	private long authorId;
-	private LocalDateTime cretedDateTime;
+//	private LocalDateTime cretedDateTime;
 	
 	
 }

@@ -1,9 +1,6 @@
 package com.in2it.blogservice.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +25,9 @@ public class Blog {
 	private long departmentId;
 	private long projectId;
 	@NotNull
+	private long authorId;
+	
+	@NotNull
 	private String title;
 	@NotNull
 	private String content;
@@ -35,11 +35,12 @@ public class Blog {
 	private String visiblity;
 	private int commentCount;
 	private int likeCount;
-	private List<String> media;
-	@NotNull
-	private long authorId;
-	private long deletedBy;
-	private LocalDateTime deletedAt;
+	
+//	private List<String> media;
+	private String media;
+	private String mediaPath;
+	
+	
 
 	private LocalDateTime cretedDateTime;
 }

@@ -3,10 +3,13 @@ package com.in2it.blogservice.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,25 +25,28 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/in2it-blog")
 public class BlogServiceController {
-
+	@Autowired
 	private BlogServiceImpl serviceImpl;
+	
+	@PostMapping(path = "/posts", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<BlogDto> saveBlog( @ModelAttribute BlogDto blogDto) {
 
-	/*
-	 * This method is used to insert blog in database.
-	 */
-	@PostMapping("/post")
-	public ResponseEntity<BlogDto> saveBlog( @RequestBody BlogDto blogDto) {
-
+		
+		System.out.println(" ================="+blogDto+"======");
 		if (blogDto != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.saveBlog(blogDto));
+			
+			
+			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.saveBlog(blogDto,blogDto.getMedia()));
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(serviceImpl.saveBlog(blogDto));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(serviceImpl.saveBlog(blogDto,blogDto.getMedia()));
 		}
 
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<BlogDto> updateBlog(@RequestBody BlogDto blogDto, @Valid @PathVariable Long id) {
+
+	
+	@PutMapping(path="/update" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<BlogDto> updateBlog(@RequestBody BlogDto blogDto, @Valid @PathVariable("authId") Long id) {
 
 		if (blogDto != null || id > 0) {
 			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateBlog(blogDto, id));
@@ -50,7 +56,7 @@ public class BlogServiceController {
 
 	}
 
-	@DeleteMapping("/delete")
+	@DeleteMapping("/auther/{authId}/delete")
 	public ResponseEntity<?> deleteBlog(@PathVariable @Valid Long id) {
 		Boolean deleteBlog = serviceImpl.deleteBlog(id);
 		
@@ -61,14 +67,45 @@ public class BlogServiceController {
 			return ResponseEntity.status(HttpStatus.OK).body(false);
 		}
 		
-
 	}
 
 	// pagination
-	@GetMapping("/get/{blogId}")
-	public ResponseEntity<?> getBlog(@PathVariable(value = "blogId") @Valid Long id) {
+	
 
-		BlogDto blog = serviceImpl.getBlog(id);
+	// pagination
+	@GetMapping("/get")
+     public	ResponseEntity<List<BlogDto>> getAllBlog() {
+		List<BlogDto> blog = serviceImpl.getBlog();
+		if(!blog.isEmpty()) {
+
+			return ResponseEntity.status(HttpStatus.OK).body(blog);
+
+		} else{
+
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ArrayList<>());
+		}
+	}
+
+	// pagination
+
+	@GetMapping("/getByAuthId/{id}")
+	 public	ResponseEntity<?> getBlogsByAutherId(@PathVariable @Valid long id) {
+
+		List<BlogDto> byAutherId = serviceImpl.getByAutherID(id);
+		
+		if(!byAutherId.isEmpty()) {
+
+			return ResponseEntity.status(HttpStatus.OK).body(byAutherId);
+
+		} else{
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ArrayList<>());
+		}
+
+	}
+	@GetMapping("/getByBlogId/{blogId}")
+	public ResponseEntity<BlogDto> getBlogById(@PathVariable(value = "blogId") @Valid Long id) {
+
+		BlogDto blog = serviceImpl.getBlogById(id);
 		
 		if(blog!=null) {
 
@@ -82,47 +119,16 @@ public class BlogServiceController {
 	}
 
 	// pagination
-	@GetMapping("/get/{blogTitle}")
-	public ResponseEntity<?> getBlog(@PathVariable(value = "blogTitle") @Valid String title) {
+	@GetMapping("/getByTitle/{blogTitle}")
+	public ResponseEntity<List<BlogDto>> getBlogByTitle(@PathVariable(value = "blogTitle")  String title) {
 
-		List<BlogDto> blog = serviceImpl.getBlog(title);
+		List<BlogDto> blog = serviceImpl.getBlogTitle(title);
 		
 		if(!blog.isEmpty()) {
 
 			return ResponseEntity.status(HttpStatus.OK).body(blog);
 		} else {
 			
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ArrayList<>());
-		}
-
-	}
-
-	// pagination
-	@GetMapping("/get")
-     public	ResponseEntity<?> getBlog() {
-		List<BlogDto> blog = serviceImpl.getBlog();
-		if(!blog.isEmpty()) {
-
-			return ResponseEntity.status(HttpStatus.OK).body(blog);
-
-		} else{
-
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ArrayList<>());
-		}
-	}
-
-	// pagination
-	@GetMapping("/get/{id}")
-	 public	ResponseEntity<?> getByAutherName(@PathVariable @Valid long id) {
-		
-		List<BlogDto> byAutherName = serviceImpl.getByAutherID(id);
-		
-		if(!byAutherName.isEmpty()) {
-
-			return ResponseEntity.status(HttpStatus.OK).body(byAutherName);
-
-		} else{
-
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ArrayList<>());
 		}
 
