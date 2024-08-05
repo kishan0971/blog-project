@@ -6,22 +6,31 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
+@ToString
+@Getter
+@Setter
 public class BlogDto {
 	
-   
+
 	private long id;
+	
 	@NotNull
 	private long departmentId;
 	@NotNull
@@ -35,10 +44,17 @@ public class BlogDto {
 	private String visiblity;
 	private int commentCount;
 	private int likeCount;
+	
 	private List<MultipartFile> media;
 	@NotNull
 	private long authorId;
 	private LocalDateTime cretedDateTime;
+	
+	private long deletedBy;
+	
+	
+	 private String status;
+
 	
 	
 }

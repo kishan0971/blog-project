@@ -21,8 +21,11 @@ import com.in2it.blogservice.model.Blog;
 import com.in2it.blogservice.repository.BlogRepository;
 import com.in2it.blogservice.service.BlogService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 @Component
+@Transactional
 public class BlogServiceImpl implements BlogService {
 
 	@Autowired
@@ -42,11 +45,13 @@ public class BlogServiceImpl implements BlogService {
 
 		Blog blog = repo.save(objectMapper.dtoToBlogConverter(blogDto));
 
-		blogDto.setLikeCount(0);
-		blogDto.setCommentCount(0);
+		System.out.println("------service  "+blog);
+		
+//		blogDto.setLikeCount(0);
+//		blogDto.setCommentCount(0);
 //		Author author=authorRepo.getById(blogDto.getAuthorId());
 		
-		Blog save = repo.save(objectMapper.dtoToBlogConverter(blogDto));
+//		Blog save = repo.save(objectMapper.dtoToBlogConverter(blogDto));
 		
 		File file=new File("image");
 		String path1=null;
@@ -62,7 +67,7 @@ public class BlogServiceImpl implements BlogService {
 					FileInputStream fis=new FileInputStream(path1);
 				}
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 	    }
@@ -70,23 +75,9 @@ public class BlogServiceImpl implements BlogService {
 		return objectMapper.blogToDtoConverter(blog);
 	}
 
-////	write
-//	String path = getServletContext().getRealPath("image");
-//    MultipartRequest mpr = new MultipartRequest(req, path, 500 * 1024 * 1024);
-//    String path1 = mpr.getOriginalFileName("img");
-//    String path2 = path + "/" + path1;
-//    FileInputStream fis = new FileInputStream(path2);
-//
-////    read
-//    String path=request.getServletContext().getRealPath("/");
-// 	InputStream f=rec.getBinaryStream("img");
-//	FileOutputStream fout=new FileOutputStream(path+"\\"+"profile"+rec.getInt(1)+".png");
-//	int i=0;
-//    while((i=f.read())!=-1)
-//    {
-//        fout.write(i);
-//    }
 
+
+	
 	@Override
 	public BlogDto updateBlog(BlogDto blogDto, Long id) {
 		// TODO Auto-generated method stub
@@ -95,10 +86,20 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public Boolean deleteBlog(Long id) {
-		return null;
+		
+		if(id>0) {
+		 repo.deleteBlogById(id);
+		return	true;
+		}
+		else {
+		
+			throw new IdInvalidException("id not found, Please ! enter correct id.");
+		}
+		
 
 	}
 
+	
 	@Override
 	public List<BlogDto> getBlogTitle(String title) {
 
@@ -113,7 +114,7 @@ public class BlogServiceImpl implements BlogService {
 				blogDtoList.add(blogToDtoConverter);
 			} else {
 				throw new UserNotFoundException(
-						HttpStatus.NO_CONTENT + "Content not avelable, please ! Try again.");
+						HttpStatus.NO_CONTENT + " Data not available, please ! Try again.");
 			}
 		}
 
@@ -134,7 +135,7 @@ public class BlogServiceImpl implements BlogService {
 				blogDtoList.add(blogToDtoConverter);
 			} else {
 				throw new UserNotFoundException(
-						HttpStatus.NO_CONTENT + "Content not avelable, please ! Try again.");
+						HttpStatus.NO_CONTENT + " Data not available, please ! Try again.");
 			}
 		}
 
@@ -156,7 +157,7 @@ public class BlogServiceImpl implements BlogService {
 				blogDtoList.add(blogToDtoConverter);
 			} else {
 				throw new UserNotFoundException(
-						HttpStatus.NO_CONTENT + "Content not available, please ! Try again.");
+						HttpStatus.NO_CONTENT + "  Data not available, please ! Try again.");
 			}
 		}
 		
@@ -166,13 +167,14 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public BlogDto getBlogById(Long id) {
 
-		Blog blog = repo.findById(id).orElseThrow(() -> new IdInvalidException("Please ! correct id ."));
+		
+		Blog blog = repo.getByBlogId(id);
 		if (blog != null) {
 			BlogDto blogDto = objectMapper.blogToDtoConverter(blog);
 			return blogDto;
 		} else {
 			throw new UserNotFoundException(
-					HttpStatus.NO_CONTENT + "Content not avelable, please ! Try again.");
+					HttpStatus.NO_CONTENT + "   Data not available, please ! Try again.");
 		}
 	}
 	
