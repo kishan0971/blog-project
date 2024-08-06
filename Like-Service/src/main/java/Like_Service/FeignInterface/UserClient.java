@@ -1,8 +1,7 @@
-package Like_Service.LikeController;
+package Like_Service.FeignInterface;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -18,5 +17,5 @@ public interface UserClient {
 
 
     @PostMapping("/getusernamesbyids")
-    public List<String> getUsernameByIda(@RequestBody List<Long> userids);
+    public ResponseEntity<List<String>> getUsernameByIds(@RequestBody List<Long> userids);
 }

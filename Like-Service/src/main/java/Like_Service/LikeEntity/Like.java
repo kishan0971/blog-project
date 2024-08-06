@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="like_table")
-public class Like {
+public class Like<S> {
 
     @Id
     @GeneratedValue(generator= "like_seq")

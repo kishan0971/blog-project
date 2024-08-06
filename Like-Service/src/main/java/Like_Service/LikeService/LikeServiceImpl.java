@@ -1,12 +1,14 @@
 package Like_Service.LikeService;
 
-import Like_Service.FeignInterface.FeignInterface;
+import Like_Service.FeignInterface.BlogClient;
 import Like_Service.LikeEntity.Like;
 import Like_Service.LikeRepository.LikeRepository;
 import com.in2it.blogservice.dto.BlogDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -15,7 +17,7 @@ public class LikeServiceImpl implements LikeService {
         private LikeRepository likeRepository;
 
         @Autowired
-        private FeignInterface feign;
+        private BlogClient feign;
 
         @Override
         public Like likepost(long blogid, long userid) {
@@ -40,7 +42,9 @@ public class LikeServiceImpl implements LikeService {
             }
             return null;
         }
-    }
+
+
+}
 
 
 

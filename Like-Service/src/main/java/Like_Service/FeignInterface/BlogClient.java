@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name="blog-service" , url="http://localhost:8080/in2it-blog/")
-public interface FeignInterface {
+public interface BlogClient {
 
     //get api to get blog by blog
     @GetMapping("/getByBlogId/{blogId}")
