@@ -98,22 +98,23 @@ public class Converter {
 		try {
 			fullPath=fileUploadDir+File.separator+file.getOriginalFilename();
 			
-			// read data from multi part
-//			InputStream stream=file.getInputStream();
-//			byte[] data=new byte[stream.available()];
-//			stream.read(data);
-//			
-//			// file write data 
-//			
-//			
-//			System.out.println("full path +++++"+ fullPath);
-//			FileOutputStream outputStream=new FileOutputStream(fullPath);
-//			outputStream.write(data);
-//			
-//			outputStream.flush();
-//			outputStream.close();
+			// read data from multipartFile
+			/*
+			InputStream stream=file.getInputStream();
+			byte[] data=new byte[stream.available()];
+			stream.read(data);
+			
+			// file write data 
 			
 			
+			System.out.println("full path +++++"+ fullPath);
+			FileOutputStream outputStream=new FileOutputStream(fullPath);
+			outputStream.write(data);
+			
+			outputStream.flush();
+			outputStream.close();
+			
+			*/
 			
 			// replaced code in one line 
 			Files.copy(file.getInputStream(),Paths.get(fullPath), StandardCopyOption.REPLACE_EXISTING);
