@@ -39,7 +39,8 @@ public class BlogServiceController {
 		
 		log.info(" ================="+blogDto+"======");
 		if (blogDto != null) {
-
+			
+			
 			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.saveBlog(blogDto));
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(serviceImpl.saveBlog(blogDto));
@@ -107,7 +108,6 @@ public class BlogServiceController {
 
 	}
 
-	
 	
 	// pagination
 	@GetMapping("/getByTitle/{blogTitle}")
