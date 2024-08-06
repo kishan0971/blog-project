@@ -1,6 +1,7 @@
 package com.in2it.commentandlikeservice.dto;
 
-import jakarta.persistence.Transient;
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ public class CommentDto {
 	private String media;
 	private long blogId;
 	private long authorID;
-	
+	private Date date;
 	
 	
 	private Blog blog;

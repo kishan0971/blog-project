@@ -2,6 +2,7 @@ package com.in2it.blogservice.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class Blog {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -27,6 +28,7 @@ public class Blog {
 	@NotNull
 	private String title;
 	@NotNull
+	@Column(length = 5000)
 	private String content;
 	@NotNull
 	private String visiblity;
@@ -40,15 +42,5 @@ public class Blog {
 	private long authorId;
 
 	private LocalDateTime cretedDateTime;
-
-	
-	
-	
-	
-
-
-	
-
-
 
 }
