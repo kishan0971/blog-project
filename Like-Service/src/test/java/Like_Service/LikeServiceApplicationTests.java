@@ -1,10 +1,10 @@
-package com.example;
+package Like_Service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LikeApplicationTests {
+class LikeServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

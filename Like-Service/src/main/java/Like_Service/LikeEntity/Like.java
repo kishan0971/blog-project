@@ -1,4 +1,4 @@
-package com.example.Entity;
+package Like_Service.LikeEntity;
 
 import jakarta.persistence.*;
 
@@ -11,7 +11,7 @@ public class Like {
     @SequenceGenerator(name="like_seq",initialValue =1,  allocationSize=1)
     private Long id;
     private Long blogid;
- private long userid=1;
+    private long userid=1;
 
     public Long getId() {
         return id;

@@ -1,15 +1,15 @@
-package com.example;
+package Like_Service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@EnableFeignClients
 @SpringBootApplication
-public class LikeApplication {
+@EnableFeignClients
+public class LikeServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LikeApplication.class, args);
+		SpringApplication.run(LikeServiceApplication.class, args);
 	}
 
 }
