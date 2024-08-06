@@ -41,12 +41,19 @@ public class Blog {
 	private int commentCount;
 	private int likeCount;
 	
-	private List<String> media;
+//	private List<String> media;
 	
 	private LocalDateTime cretedDateTime;
+	
 	
 	private long deletedBy;
 	
 
 	 private String status;
+	 
+	 
+	 
+	 private String mediaFile;
+	 
+	 private String mediaPath;
 }

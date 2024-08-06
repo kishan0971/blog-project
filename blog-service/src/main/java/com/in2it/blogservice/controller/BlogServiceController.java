@@ -34,20 +34,16 @@ public class BlogServiceController {
 	 */
 
 	@PostMapping(path = "/posts", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<BlogDto> saveBlog( @ModelAttribute BlogDto blogDto) {
+	public ResponseEntity<?> saveBlogWithFile( @ModelAttribute BlogDto blogDto) {
 
+		BlogDto saveBlogWithFile = serviceImpl.saveBlogWithFile(blogDto,blogDto.getMedia());
 		
-		log.info(" ================="+blogDto+"======");
-		if (blogDto != null) {
-			
-			
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.saveBlog(blogDto));
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(serviceImpl.saveBlog(blogDto));
-		}
-
+		return ResponseEntity.status(HttpStatus.OK).body(saveBlogWithFile);
+		
 	}
-
+	
+	
+	
 	
 	
 	@PutMapping(path="/update" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
@@ -92,11 +88,8 @@ public class BlogServiceController {
 	@GetMapping("/getByAuthId/{id}")
 	 public	ResponseEntity<List<BlogDto>> getBlogsByAutherId(@PathVariable @Valid long id) {
 
-		
-
 			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getByAutherID(id));
 
-	
 	}
 	
 	
