@@ -1,6 +1,5 @@
 package com.in2it.blogservice.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,10 @@ import com.in2it.blogservice.service.impl.BlogServiceImpl;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
+@Slf4j
 @RequestMapping("/in2it-blog")
 public class BlogServiceController {
 	@Autowired
@@ -36,10 +37,9 @@ public class BlogServiceController {
 	public ResponseEntity<BlogDto> saveBlog( @ModelAttribute BlogDto blogDto) {
 
 		
-		System.out.println(" ================="+blogDto+"");
+		log.info(" ================="+blogDto+"======");
 		if (blogDto != null) {
-			
-			
+
 			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.saveBlog(blogDto));
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(serviceImpl.saveBlog(blogDto));
@@ -47,6 +47,7 @@ public class BlogServiceController {
 
 	}
 
+	
 	
 	@PutMapping(path="/update" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<BlogDto> updateBlog(@RequestBody BlogDto blogDto, @Valid @PathVariable("authId") Long id) {
@@ -59,18 +60,19 @@ public class BlogServiceController {
 
 	}
 
-	@DeleteMapping("/auther/{authId}/delete")
-	public ResponseEntity<?> deleteBlog(@PathVariable @Valid Long id) {
-		Boolean deleteBlog = serviceImpl.deleteBlog(id);
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Boolean> deleteBlog(@PathVariable Long id) {
 		
-		if(deleteBlog)
-		{
-			return ResponseEntity.status(HttpStatus.OK).body(true);
-		}else {
-			return ResponseEntity.status(HttpStatus.OK).body(false);
-		}
-		
+	
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlog(id));
+	
 	}
+	
+	@DeleteMapping("/deleteByTitle/{title}")
+	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title){
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlogByTitle(title));
+	}
+	
 
 	// pagination
 	
@@ -78,62 +80,42 @@ public class BlogServiceController {
 	// pagination
 	@GetMapping("/get")
      public	ResponseEntity<List<BlogDto>> getAllBlog() {
-		List<BlogDto> blog = serviceImpl.getBlog();
-		if(!blog.isEmpty()) {
+		
 
-			return ResponseEntity.status(HttpStatus.OK).body(blog);
+			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlog());
 
-		} else{
-
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ArrayList<>());
-		}
 	}
 
 	// pagination
 
 	@GetMapping("/getByAuthId/{id}")
-	 public	ResponseEntity<?> getBlogsByAutherId(@PathVariable @Valid long id) {
+	 public	ResponseEntity<List<BlogDto>> getBlogsByAutherId(@PathVariable @Valid long id) {
 
-		List<BlogDto> byAutherId = serviceImpl.getByAutherID(id);
 		
-		if(!byAutherId.isEmpty()) {
 
-			return ResponseEntity.status(HttpStatus.OK).body(byAutherId);
+			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getByAutherID(id));
 
-		} else{
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ArrayList<>());
-		}
-
+	
 	}
+	
+	
 	@GetMapping("/getByBlogId/{blogId}")
 	public ResponseEntity<BlogDto> getBlogById(@PathVariable(value = "blogId") @Valid Long id) {
 
-		BlogDto blog = serviceImpl.getBlogById(id);
-		
-		if(blog!=null) {
-
-			return ResponseEntity.status(HttpStatus.OK).body(blog);
-
-		} else {
-
-			return  ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-		}
+	
+			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlogById(id));
 
 	}
 
+	
+	
 	// pagination
 	@GetMapping("/getByTitle/{blogTitle}")
 	public ResponseEntity<List<BlogDto>> getBlogByTitle(@PathVariable(value = "blogTitle")  String title) {
 
-		List<BlogDto> blog = serviceImpl.getBlogTitle(title);
-		
-		if(!blog.isEmpty()) {
 
-			return ResponseEntity.status(HttpStatus.OK).body(blog);
-		} else {
-			
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ArrayList<>());
-		}
+			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlogTitle(title));
+		
 
 	}
 

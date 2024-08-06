@@ -44,8 +44,9 @@ public class Converter {
 		
 		blog.setLikeCount(dto.getLikeCount());
 		blog.setCommentCount(dto.getCommentCount());
-		
-		
+		blog.setDeletedBy(dto.getDeletedBy());
+	    blog.setStatus(dto.getStatus());
+	    System.out.println("my blog ----- "+blog);
 		return blog;
 	}
 	
@@ -67,7 +68,8 @@ public class Converter {
 		dto.setLikeCount(blog.getLikeCount());
 		dto.setCommentCount(blog.getCommentCount());
 		
-		
+		dto.setDeletedBy(blog.getDeletedBy());
+	    dto.setStatus(blog.getStatus());
 		
 		return dto;
 	}
