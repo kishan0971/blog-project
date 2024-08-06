@@ -28,18 +28,18 @@ public class CommentController {
 
 
 	@PostMapping(path = "/post", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<?> createComment(@ModelAttribute CommentDto commentDto, @RequestParam("file") MultipartFile file){
+	public ResponseEntity<CommentDto> createComment(@ModelAttribute CommentDto commentDto){
 		try {
 			System.out.println("++++++++++");
-			Comment createComment= commentService.saveComment(commentDto,file);
+			CommentDto createComment= commentService.saveComment(commentDto,commentDto.getFile());
 			
 			return ResponseEntity.status(HttpStatus.CREATED).body(createComment);
 		}catch(Exception e){
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 	}
-	@GetMapping
-	public ResponseEntity<List<Comment>> getAllComment(){
+	@GetMapping(path = "/get")
+	public ResponseEntity<List<CommentDto>> getAllComment(){
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllComment());
 		}catch(Exception e) {

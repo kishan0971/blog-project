@@ -19,6 +19,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Comment {
+	public Comment(String content, String media, long blogId, long authorID, Date date) {
+		super();
+		this.content = content;
+		this.media = media;
+		this.blogId = blogId;
+		this.authorID = authorID;
+		this.date = date;
+//		this.blog = blog;
+//		this.author = author;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -28,11 +40,11 @@ public class Comment {
 	private long authorID;
 	private Date date;
 	
-	@Transient
-	private Blog blog;
-	
-	
-	@Transient
-	private Author author;
+//	@Transient
+//	private Blog blog;
+//	
+//	
+//	@Transient
+//	private Author author;
 
 }

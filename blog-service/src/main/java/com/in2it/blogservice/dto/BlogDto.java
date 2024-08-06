@@ -2,6 +2,9 @@ package com.in2it.blogservice.dto;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,10 +35,11 @@ public class BlogDto {
 	private String visiblity;
 	private int commentCount;
 	private int likeCount;
-	private String media;
+	private MultipartFile media;
+	private byte[] img;
 	@NotNull
 	private long authorId;
-	private LocalDateTime cretedDateTime;
+//	private LocalDateTime cretedDateTime;
 	
 	
 }

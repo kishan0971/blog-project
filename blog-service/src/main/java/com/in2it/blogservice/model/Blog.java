@@ -26,6 +26,9 @@ public class Blog {
 	private long departmentId;
 	private long projectId;
 	@NotNull
+	private long authorId;
+
+	@NotNull
 	private String title;
 	@NotNull
 	@Column(length = 5000)
@@ -34,12 +37,10 @@ public class Blog {
 	private String visiblity;
 	private int commentCount;
 	private int likeCount;
-	private String media;
 
-	@NotNull
-	private String postedBy;
-	@NotNull
-	private long authorId;
+//	private List<String> media;
+	private String media;
+	private String mediaPath;
 
 	private LocalDateTime cretedDateTime;
 
