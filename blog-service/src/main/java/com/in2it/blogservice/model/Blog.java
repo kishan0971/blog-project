@@ -38,22 +38,26 @@ public class Blog {
 	private String content;
 	@NotNull
 	private String visiblity;
-	private int commentCount;
-	private int likeCount;
+	
+	private long commentCount;
+	private long likeCount;
 	
 //	private List<String> media;
 	
-	private LocalDateTime cretedDateTime;
 	
 	
 	private long deletedBy;
+	private long updatedBy;
+	
 	
 
 	 private String status;
 	 
+	 private LocalDateTime cretedDateTime;
+	 private LocalDateTime updatedDateTime;
+	 private LocalDateTime deletedDateTime;
 	 
+	 private List<String> mediaFile;
 	 
-	 private String mediaFile;
-	 
-	 private String mediaPath;
+	 private List<String> mediaPath;
 }

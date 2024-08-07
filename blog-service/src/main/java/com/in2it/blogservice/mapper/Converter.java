@@ -1,9 +1,7 @@
 package com.in2it.blogservice.mapper;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -11,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,28 +21,29 @@ import com.in2it.blogservice.model.Blog;
 public class Converter {
 	
 	/*static way to create file path*/
-//	public final String fileUploadDir="D:\\blog-project\\blog-service\\src\\main\\resources\\static\\image";
+	public final String fileUploadDir="D:\\blog-project\\blog-service\\src\\main\\resources\\static\\image";
 	
 	/* dynamic way to create file path*/
-	public final String fileUploadDir=new ClassPathResource("static/image/").getFile().getAbsolutePath();
+    //public final String fileUploadDir=new ClassPathResource("static/image/").getFile().getAbsolutePath();
 	
 	
 	public Converter() throws IOException {
 		
 	}
 	
-	public Blog dtoToBlogConverter(BlogDto dto,String fileName,String uploadedPath)
+	// Here we changed DtoModel to Entity
+	public Blog dtoToBlogConverter(BlogDto dto, List<String> fileName, List<String> uploadedPath)
 	{
 		Blog blog=new Blog();
 		blog.setContent(dto.getContent());
 		blog.setAuthorId(dto.getAuthorId());
 
 		blog.setMediaFile(fileName);
+		blog.setMediaPath(uploadedPath);
 		
 		blog.setTitle(dto.getTitle());
 		blog.setVisiblity(dto.getVisiblity());
 
-		blog.setMediaPath(uploadedPath);
 		
 		//set to current date&time
 		blog.setCretedDateTime(LocalDateTime.now());
@@ -62,21 +60,24 @@ public class Converter {
 		return blog;
 	}
 	
+	
+	// Here we changed Entity to DtoModel
 	public BlogDto blogToDtoConverter(Blog blog)
 	{
 		BlogDto dto=new BlogDto();
 		
 		
 		dto.setId(blog.getId()); 
+		
 		dto.setContent(blog.getContent());
 		dto.setAuthorId(blog.getAuthorId());
-//		dto.setMedia (blog.getMedia());
+
 		dto.setTitle(blog.getTitle());
 		dto.setVisiblity(blog.getVisiblity());
 		dto.setProjectId(blog.getProjectId());
 		dto.setDepartmentId(blog.getDepartmentId());
 
-		//set to initial value 
+	
 		dto.setLikeCount(blog.getLikeCount());
 		dto.setCommentCount(blog.getCommentCount());
 		
@@ -92,14 +93,19 @@ public class Converter {
 
 	
 	// uploading file in file System
-	public String uploadFile(MultipartFile file) {
+	public List<String> uploadFile(List<MultipartFile> multipartFile) {
 
 		String fullPath=null;
+		
+		List<String> paths=new ArrayList<>();
+		
 		try {
-			fullPath=fileUploadDir+File.separator+file.getOriginalFilename();
+			
+			
 			
 			// read data from multipartFile
 			/*
+			fullPath=fileUploadDir+File.separator+multipartFile2.getOriginalFilename();
 			InputStream stream=file.getInputStream();
 			byte[] data=new byte[stream.available()];
 			stream.read(data);
@@ -117,14 +123,24 @@ public class Converter {
 			*/
 			
 			// replaced code in one line 
-			Files.copy(file.getInputStream(),Paths.get(fullPath), StandardCopyOption.REPLACE_EXISTING);
+			
+              for (MultipartFile multipartFile2 : multipartFile) {
+				
+				fullPath=fileUploadDir+File.separator+multipartFile2.getOriginalFilename();
+				
+				paths.add(fullPath);
+				
+				// This code is inserted file in file system 
+				Files.copy(multipartFile2.getInputStream(),Paths.get(fullPath), StandardCopyOption.REPLACE_EXISTING);
+			}
+			
 			
 		} catch (IOException e) {
 			
 			e.printStackTrace();
 		}
 		
-		return fullPath;
+		return paths;
 		
 	}
 	

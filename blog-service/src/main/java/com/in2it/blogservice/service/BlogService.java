@@ -6,15 +6,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.in2it.blogservice.dto.BlogDto;
+import com.in2it.blogservice.dto.BlogUpdateDto;
 @Component
 public interface BlogService {
 	
 	
 //	BlogDto saveBlog(BlogDto blogDto);
-	BlogDto	saveBlogWithFile(BlogDto blogDto,MultipartFile img);
-	BlogDto updateBlog(BlogDto blogDto, Long id);
-	Boolean deleteBlog(Long id);
-	Boolean deleteBlogByTitle(String title);
+	BlogDto	saveBlogWithFile(BlogDto blogDto,List<MultipartFile> multipartFile);
+	
+	BlogDto updateBlog(BlogUpdateDto updateDto, Long id);
+	BlogDto updateLike(Long totallikeCount ,Long id);
+	BlogDto updateComment(Long totalCommentCount,Long id);
+	
+	Boolean deleteBlog(long id, long userId);
+	Boolean deleteBlogByTitle(String title, long userId);
 	
 	BlogDto getBlogById(Long id);
 	List<BlogDto> getBlogTitle(String title);

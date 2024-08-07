@@ -1,7 +1,6 @@
 package com.in2it.blogservice.dto;
 
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -43,30 +42,35 @@ public class BlogDto {
 	@NotBlank(message = "content cannot be blank")
 	private String content;
 	private String visiblity;
-	private int commentCount;
-	private int likeCount;
+	
+	@Hidden
+	private long commentCount;
+	
+	@Hidden
+	private long likeCount;
 	
 	@NotNull
 	private long authorId;
-//	private LocalDateTime cretedDateTime;
+
 	
 	@Hidden
 	private long deletedBy;
 	
-	@Hidden
+	 @Hidden
+	 @JsonProperty(access = Access.WRITE_ONLY)
 	 private String status;
 	 
-//	 private List<MultipartFile> media;
+
 	 
 	 @JsonProperty(access = Access.WRITE_ONLY)
-	 private MultipartFile media;
+	 private List<MultipartFile> media;
 	 
 	 @Hidden
-	 private String mediaFile;
+	 private List<String> mediaFile;
 
 
 	 @Hidden
-	 private String mediaPath;
+	 private List<String> mediaPath;
 	
 	
 }

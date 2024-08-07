@@ -13,17 +13,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.in2it.blogservice.dto.BlogDto;
+import com.in2it.blogservice.dto.BlogUpdateDto;
 import com.in2it.blogservice.service.impl.BlogServiceImpl;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@Slf4j
+
 @RequestMapping("/in2it-blog")
 public class BlogServiceController {
 	@Autowired
@@ -35,39 +37,44 @@ public class BlogServiceController {
 
 	@PostMapping(path = "/posts", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<?> saveBlogWithFile( @ModelAttribute BlogDto blogDto) {
+		
+		List<MultipartFile> media = blogDto.getMedia();
 
-		BlogDto saveBlogWithFile = serviceImpl.saveBlogWithFile(blogDto,blogDto.getMedia());
+		BlogDto saveBlogWithFile = serviceImpl.saveBlogWithFile(blogDto,media);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(saveBlogWithFile);
 		
 	}
 	
-	
-	
-	
-	
-	@PutMapping(path="/update" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<BlogDto> updateBlog(@RequestBody BlogDto blogDto, @Valid @PathVariable("authId") Long id) {
 
-		if (blogDto != null || id > 0) {
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateBlog(blogDto, id));
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(serviceImpl.updateBlog(blogDto, id));
-		}
+	@PutMapping(path="/update/{updatedByUserId}" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<BlogDto> updateBlog(@RequestBody  BlogUpdateDto updateDto, @Valid @PathVariable("updatedByUserId") long id) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateBlog(updateDto, id));
 
 	}
+	
+	@PutMapping("/updateLike")
+	public ResponseEntity<BlogDto> updateLike(@RequestParam  Long id ,@RequestParam Long totalLikeCount) {
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateLike(totalLikeCount, id));
+	}
+	
+	@PutMapping("/updateComment")
+	public ResponseEntity<BlogDto> updateComment(@RequestParam Long id ,@RequestParam Long totalCommentCount) {
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateComment(totalCommentCount, id));
+	}
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Boolean> deleteBlog(@PathVariable Long id) {
+	@DeleteMapping("/deleteByBlogId/{id}")
+	public ResponseEntity<Boolean> deleteBlog(@PathVariable Long id , @RequestParam long userId) {
 		
 	
-		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlog(id));
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlog(id,userId));
 	
 	}
 	
 	@DeleteMapping("/deleteByTitle/{title}")
-	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title){
-		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlogByTitle(title));
+	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title,  @RequestParam long userId){
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlogByTitle(title, userId));
 	}
 	
 
@@ -78,7 +85,6 @@ public class BlogServiceController {
 	@GetMapping("/get")
      public	ResponseEntity<List<BlogDto>> getAllBlog() {
 		
-
 			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlog());
 
 	}

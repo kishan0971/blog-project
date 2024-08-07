@@ -1,5 +1,6 @@
 package com.in2it.blogservice.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,11 +32,11 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
 		
 	
 	@Modifying
-	@Query(value= "update  blog set  status='InActive' where  id=%:id%", nativeQuery = true)
-	 void deleteBlogById(Long id);
+	@Query(value= "update  blog set  status='InActive', deleted_by=%:userId%  , deleted_date_time=%:time% where  id=%:id%", nativeQuery = true)
+	 void deleteBlogById(long id , long userId ,LocalDateTime time);
 	
 	@Modifying
-	@Query(value= "update  blog set  status='InActive' where  title=%:title%", nativeQuery = true)
-	void deleteBytitle(String title);
+	@Query(value= "update  blog set  status='InActive', deleted_by=%:userId%  , deleted_date_time=%:time% where  title=%:title%", nativeQuery = true)
+	void deleteBytitle(String title, long userId ,LocalDateTime time);
 	
 }
