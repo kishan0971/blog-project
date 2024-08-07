@@ -12,9 +12,9 @@ public interface CommentService {
 	public CommentDto saveComment(CommentDto commentDto, MultipartFile file);
 //	public Comment saveComment(CommentDto commentDto, MultipartFile file);
 //	public List<Comment> getAllComment();
-	public List<CommentDto> getAllComment();
+//	public List<CommentDto> getAllComment();
 	public List<CommentDto> getByBlogId(Long id);
 	public List<CommentDto> getByUserName(String usename);
 	public Boolean deleteCommentId(Long id);
-	
+	public List<Comment> deleteByBlogId(Long id);
 }

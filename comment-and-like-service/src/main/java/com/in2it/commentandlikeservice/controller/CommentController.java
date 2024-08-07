@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.in2it.commentandlikeservice.dto.CommentDto;
+import com.in2it.commentandlikeservice.model.Comment;
 import com.in2it.commentandlikeservice.service.CommentService;
 
 @RestController
@@ -36,14 +37,14 @@ public class CommentController {
 		}
 	}
 
-	@GetMapping(path = "/get")
-	public ResponseEntity<List<CommentDto>> getAllComment() {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllComment());
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
+//	@GetMapping(path = "/get")
+//	public ResponseEntity<List<CommentDto>> getAllComment() {
+//		try {
+//			return ResponseEntity.status(HttpStatus.OK).body(commentService.getAllComment());
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//	}
 
 	@GetMapping("/getByBlogId/{id}")
 	public ResponseEntity<List<CommentDto>> getCommentByBlogId(@PathVariable Long id) {
@@ -64,9 +65,16 @@ public class CommentController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Boolean> deleteBlog(@PathVariable Long id) {
+	public ResponseEntity<Boolean> deleteCommentById(@PathVariable Long id) {
 
 		return ResponseEntity.status(HttpStatus.OK).body(commentService.deleteCommentId(id));
+
+	}
+	
+	@DeleteMapping("/deleteByBlogId/{id}")
+	public ResponseEntity<List<Comment>> deleteCommentByBlogId(@PathVariable Long id) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(commentService.deleteByBlogId(id));
 
 	}
 

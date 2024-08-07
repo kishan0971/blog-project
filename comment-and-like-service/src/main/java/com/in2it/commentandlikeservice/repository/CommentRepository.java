@@ -12,6 +12,7 @@ import com.in2it.commentandlikeservice.model.Comment;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
+	@Query(value= "select  * from comment where status='Active' and blog_id =%:blogId% ", nativeQuery = true)
 	List<Comment> findByBlogId(long blogId);
 	
 	List<Comment> findByUserName(String userName);
@@ -25,7 +26,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	@Query(value= "update  comment set  status='InActive' where  id=%:id%", nativeQuery = true)
 	void deleteById(Long id);
 	
-	@Modifying
-	@Query(value= "update  comment set  status='InActive' where  id=%:id%", nativeQuery = true)
-	 void deleteBlogById(Long id);
+	
 }

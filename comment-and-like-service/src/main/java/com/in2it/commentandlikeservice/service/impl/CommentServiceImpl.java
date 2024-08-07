@@ -39,62 +39,70 @@ public class CommentServiceImpl implements CommentService {
 
 			e.printStackTrace();
 		}
-		comment.setMedia(uploadImage);
+//		comment.setMedia(uploadImage);
 		Comment com = commentRepository.save(comment);
 		CommentDto dto = objectMapper.commentToDtoConvertor(comment);
 		return dto;
 	}
 
-	
-	public List<CommentDto> getAllComment() {
-		List<Comment> commentList=commentRepository.findAll();
-//		List<Comment> commentList=commentRepository.findByStatus("Active");
-		List<CommentDto> commentDtoList=new ArrayList<>();
-		for(Comment com: commentList) {
-			if(com != null) {
-				CommentDto commentDtoConvertor=objectMapper.commentToDtoConvertor(com);
-				commentDtoList.add(commentDtoConvertor);
+//	public List<CommentDto> getAllComment() {
+////		List<Comment> commentList=commentRepository.findAll();
+//		List<Comment> commentList = commentRepository.findByStatus("Active");
+//		List<CommentDto> commentDtoList = new ArrayList<>();
+//		for (Comment com : commentList) {
+//			if (com != null) {
+//				CommentDto commentDtoConvertor = objectMapper.commentToDtoConvertor(com);
+//				commentDtoList.add(commentDtoConvertor);
+//			}
+//		}
+//		return commentDtoList;
+//	}
+
+	public List<CommentDto> getByBlogId(Long id) {
+		List<Comment> commentList = commentRepository.findByBlogId(id);
+		List<CommentDto> commentListDto = new ArrayList<>();
+		for (Comment com : commentList) {
+			if (com != null) {
+				CommentDto commentDtoConvertor = objectMapper.commentToDtoConvertor(com);
+				commentListDto.add(commentDtoConvertor);
 			}
 		}
-		return commentDtoList;
+		System.out.println(commentListDto + "66666666666");
+		return commentListDto;
 	}
-	
-	
-	public List<CommentDto> getByBlogId(Long id){
-		List<Comment> commentList=commentRepository.findByBlogId(id);
-		List<CommentDto> commentListDto=new ArrayList<>();
-		for(Comment com:commentList) {
-			if(com != null) {
-				CommentDto commentDtoConvertor= objectMapper.commentToDtoConvertor(com);
+
+	public List<CommentDto> getByUserName(String usename) {
+		List<Comment> commentList = commentRepository.findByUserName(usename);
+		List<CommentDto> commentListDto = new ArrayList<>();
+		for (Comment com : commentList) {
+			if (com != null) {
+				CommentDto commentDtoConvertor = objectMapper.commentToDtoConvertor(com);
 				commentListDto.add(commentDtoConvertor);
 			}
 		}
 		return commentListDto;
 	}
-	
-	public List<CommentDto> getByUserName(String usename){
-		List<Comment> commentList=commentRepository.findByUserName(usename);
-		List<CommentDto> commentListDto=new ArrayList<>();
-		for(Comment com:commentList) {
-			if(com != null) {
-				CommentDto commentDtoConvertor= objectMapper.commentToDtoConvertor(com);
-				commentListDto.add(commentDtoConvertor);
-			}
-		}
-		return commentListDto;
-	}
-	
-	
+
 	public Boolean deleteCommentId(Long id) {
-		
-		if(id>0) {
+
+		if (id > 0) {
 			commentRepository.deleteById(id);
-			return	true;
+			return true;
+		} else {
+
+			throw new IdInvalidException(HttpStatus.NO_CONTENT + "id not found, Please ! enter correct id.");
 		}
-		else {
-			
-			throw new IdInvalidException(HttpStatus.NO_CONTENT  + "id not found, Please ! enter correct id.");
-			}
+	}
+	
+	public List<Comment> deleteByBlogId(Long id){
+		List<Comment> comments=commentRepository.findByBlogId(id);
+		List<Comment> deleteComments= new ArrayList<>();
+		for(Comment com:comments) {
+			com.setStatus("InActive");
+			Comment c=commentRepository.save(com);
+			deleteComments.add(c);
+		}
+		return deleteComments;
 	}
 
 }

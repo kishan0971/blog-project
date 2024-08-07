@@ -29,7 +29,7 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String content;
-//	private String media;
+	private String media;
 	@NotNull
 	private long blogId;
 //	private long authorID;
@@ -45,7 +45,7 @@ public class Comment {
 	private LocalDate createdDate;
 	private String deletedBy;
 	private LocalDate deletedAt;
-	private	List<String> media;
+//	private	List<String> media;
 	private List<String> mediaPath;
 
 	public Comment(String content, String media, long blogId, String userName, Date date) {
