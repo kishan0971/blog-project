@@ -13,5 +13,6 @@ public interface CommentService {
 //	public Comment saveComment(CommentDto commentDto, MultipartFile file);
 //	public List<Comment> getAllComment();
 	public List<CommentDto> getAllComment();
+	public List<CommentDto> getByBlogId(Long id);
 	
 }

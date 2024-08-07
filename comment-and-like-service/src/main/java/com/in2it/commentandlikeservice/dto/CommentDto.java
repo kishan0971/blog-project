@@ -24,6 +24,7 @@ public class CommentDto {
 	private long authorID;
 	@JsonIgnore
 	private Date date;
+	@JsonIgnore
 	private MultipartFile file;
 	
 	

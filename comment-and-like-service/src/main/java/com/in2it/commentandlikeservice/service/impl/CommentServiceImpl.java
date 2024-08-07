@@ -48,6 +48,7 @@ public class CommentServiceImpl implements CommentService {
 		return dto;
 	}
 
+	
 	public List<CommentDto> getAllComment() {
 		List<Comment> commentList=commentRepository.findAll();
 		List<CommentDto> commentDtoList=new ArrayList<>();
@@ -58,6 +59,19 @@ public class CommentServiceImpl implements CommentService {
 			}
 		}
 		return commentDtoList;
+	}
+	
+	
+	public List<CommentDto> getByBlogId(Long id){
+		List<Comment> commentList=commentRepository.findByBlogId(id);
+		List<CommentDto> commentListDto=new ArrayList<>();
+		for(Comment com:commentList) {
+			if(com != null) {
+				CommentDto commentDtoConvertor= objectMapper.commentToDtoConvertor(com);
+				commentListDto.add(commentDtoConvertor);
+			}
+		}
+		return commentListDto;
 	}
 
 }
