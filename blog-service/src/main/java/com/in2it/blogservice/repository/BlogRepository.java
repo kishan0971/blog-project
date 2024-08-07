@@ -8,10 +8,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.in2it.blogservice.model.Blog;
+<<<<<<< HEAD
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, Long>{
     
 
+=======
+
+
+
+
+@Repository
+public interface BlogRepository extends JpaRepository<Blog, Long>{
+    
+
+>>>>>>> c4e4e9173a64ca1834c01a85800ccc820f548de7
 	@Query(value= "select  * from blog where status='Active' and title =%:title% ", nativeQuery = true)
 	 List<Blog> findByTitle(String title);
 	
@@ -31,7 +42,14 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
 	 void deleteBlogById(Long id);
 	
 	@Modifying
+<<<<<<< HEAD
 	@Query(value= "update  blog set  status='InActive' where  id=%:title%", nativeQuery = true)
 	void deleteBytitle(String title);
 	
 }
+=======
+	@Query(value= "update  blog set  status='InActive' where  title=%:title%", nativeQuery = true)
+	void deleteBytitle(String title);
+	
+}
+>>>>>>> c4e4e9173a64ca1834c01a85800ccc820f548de7

@@ -6,22 +6,32 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
+@ToString
+@Getter
+@Setter
 public class BlogDto {
 	
-	@NotNull
+
+	@Hidden
 	private long id;
+	
 	@NotNull
 	private long departmentId;
 	@NotNull
@@ -35,11 +45,36 @@ public class BlogDto {
 	private String visiblity;
 	private int commentCount;
 	private int likeCount;
+<<<<<<< HEAD
 	private MultipartFile media;
 	private byte[] img;
 	@NotNull
 	private long authorId;
 //	private LocalDateTime cretedDateTime;
+=======
+	
+	@NotNull
+	private long authorId;
+//	private LocalDateTime cretedDateTime;
+	
+	@Hidden
+	private long deletedBy;
+	
+	@Hidden
+	 private String status;
+	 
+//	 private List<MultipartFile> media;
+	 
+	 @JsonProperty(access = Access.WRITE_ONLY)
+	 private MultipartFile media;
+	 
+	 @Hidden
+	 private String mediaFile;
+
+
+	 @Hidden
+	 private String mediaPath;
+>>>>>>> c4e4e9173a64ca1834c01a85800ccc820f548de7
 	
 	
 }
