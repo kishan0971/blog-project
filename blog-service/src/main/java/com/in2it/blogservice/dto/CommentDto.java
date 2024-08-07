@@ -17,7 +17,8 @@ public class CommentDto {
 
 	private String media;
 	private long blogId;
-	private long authorID;
+//	private long authorID;
+	private String userName;
 	private Date date;
 
 

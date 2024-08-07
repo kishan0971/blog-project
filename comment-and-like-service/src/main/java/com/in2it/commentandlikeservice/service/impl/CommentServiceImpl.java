@@ -73,5 +73,19 @@ public class CommentServiceImpl implements CommentService {
 		}
 		return commentListDto;
 	}
+	
+	public List<CommentDto> getByUserName(String usename){
+		List<Comment> commentList=commentRepository.findByUserName(usename);
+		List<CommentDto> commentListDto=new ArrayList<>();
+		for(Comment com:commentList) {
+			if(com != null) {
+				CommentDto commentDtoConvertor= objectMapper.commentToDtoConvertor(com);
+				commentListDto.add(commentDtoConvertor);
+			}
+		}
+		return commentListDto;
+	}
+	
+
 
 }

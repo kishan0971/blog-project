@@ -47,9 +47,26 @@ public class CommentController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	@GetMapping("/{id}")
+	@GetMapping("/getByBlogId/{id}")
 	public ResponseEntity<List<CommentDto>> getCommentByBlogId(@PathVariable Long id){
-		
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(commentService.getByBlogId(id));
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	@GetMapping("/getByUserName/{username}")
+	public ResponseEntity<List<CommentDto>> getCommentByUserName(@PathVariable String username){
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(commentService.getByUserName(username));
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	public Boolean deleteComment(Long id) {
 		return null;
+
 	}
 }

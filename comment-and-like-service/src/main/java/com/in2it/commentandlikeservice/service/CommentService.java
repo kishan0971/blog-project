@@ -14,5 +14,5 @@ public interface CommentService {
 //	public List<Comment> getAllComment();
 	public List<CommentDto> getAllComment();
 	public List<CommentDto> getByBlogId(Long id);
-	
+	public List<CommentDto> getByUserName(String usename);
 }

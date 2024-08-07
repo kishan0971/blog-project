@@ -15,7 +15,8 @@ public class CommentConvertor {
 				commentDto.getContent(), 
 				commentDto.getMedia(),
 				commentDto.getBlogId(), 
-				commentDto.getAuthorID(), 
+//				commentDto.getAuthorID(), 
+				commentDto.getUserName(),
 				commentDto.getDate()
 //				commentDto.getBlog(),
 //				commentDto.getAuthor()
@@ -31,7 +32,8 @@ public class CommentConvertor {
 				comment.getContent(), 
 				comment.getMedia(),
 				comment.getBlogId(), 
-				comment.getAuthorID(), 
+				comment.getUserName(),
+//				comment.getAuthorID(), 
 				comment.getDate()
 //				comment.getBlog(),
 //				comment.getAuthor()
