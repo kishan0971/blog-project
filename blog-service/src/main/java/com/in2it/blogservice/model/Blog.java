@@ -1,6 +1,7 @@
 package com.in2it.blogservice.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,8 +38,10 @@ public class Blog {
 	private int likeCount;
 	
 //	private List<String> media;
-	private String media;
-	private String mediaPath;
+	private List<String> media;
+	private List<String> mediaPath;
+//	private List<String> mediaPath;
+	private long updatedBy;
 	
 	
 

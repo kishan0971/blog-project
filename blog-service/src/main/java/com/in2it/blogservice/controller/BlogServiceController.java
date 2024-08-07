@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.in2it.blogservice.dto.BlogDto;
+import com.in2it.blogservice.dto.BlogUpdateDto;
 import com.in2it.blogservice.service.impl.BlogServiceImpl;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -45,13 +47,13 @@ public class BlogServiceController {
 
 
 	
-	@PutMapping(path="/update" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<BlogDto> updateBlog(@RequestBody BlogDto blogDto, @Valid @PathVariable("authId") Long id) {
+	@PutMapping(path="/update/{authId}" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<BlogDto> updateBlog(@RequestBody BlogUpdateDto updateDto, @Valid @PathVariable("authId") Long id) {
 
-		if (blogDto != null || id > 0) {
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateBlog(blogDto, id));
+		if (updateDto != null || id > 0) {
+			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateBlog(updateDto, id));
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(serviceImpl.updateBlog(blogDto, id));
+			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(serviceImpl.updateBlog(updateDto, id));
 		}
 
 	}
@@ -110,6 +112,10 @@ public class BlogServiceController {
 		if(blog!=null) {
 
 			return ResponseEntity.status(HttpStatus.OK).body(blog);
+//			return ResponseEntity.ok()
+//	                .contentType(MediaType.IMAGE_JPEG)
+//	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + blog.getImgPath() + "\"")
+//	                .body(blog);
 
 		} else {
 

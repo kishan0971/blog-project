@@ -22,7 +22,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
 	@Query(value= "select  * from blog where status='Active'", nativeQuery = true)
 	 List<Blog> findAll();
 	
-	@Query(value= "select  * from blog where id=%:id% and status='Active'", nativeQuery = true)
+	@Query(value= "select  * from blog where id=%:id% ", nativeQuery = true)
 	Blog getByBlogId(long id);
 		
 	

@@ -3,7 +3,10 @@ package com.in2it.blogservice.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.in2it.blogservice.customException.IdInvalidException;
 import com.in2it.blogservice.customException.UserNotFoundException;
 import com.in2it.blogservice.dto.BlogDto;
+import com.in2it.blogservice.dto.BlogUpdateDto;
 import com.in2it.blogservice.mapper.Converter;
 import com.in2it.blogservice.model.Blog;
 import com.in2it.blogservice.repository.BlogRepository;
 import com.in2it.blogservice.service.BlogService;
+
+import io.swagger.v3.oas.models.Paths;
 
 @Service
 @Component
@@ -36,7 +42,7 @@ public class BlogServiceImpl implements BlogService {
 
 
 	@Override
-	public BlogDto saveBlog(BlogDto blogDto,MultipartFile img) {
+	public BlogDto saveBlog(BlogDto blogDto, List<MultipartFile> img) {
 
 		
 
@@ -46,13 +52,14 @@ public class BlogServiceImpl implements BlogService {
 		
 //		Blog save = repo.save(objectMapper.dtoToBlogConverter(blogDto));
 		
-		File file=new File("image");
-		String path1=null;
+		File file=new File("src\\main\\resources\\static\\image");
+		
+		List<String> fullPath=new ArrayList<>();
 		if(!file.isDirectory())
 		{
 			try {
-				FileInputStream fis=new FileInputStream(file);
-			} catch (FileNotFoundException e) {
+				Files.createDirectories(Path.of("src\\main\\resources\\static\\image"));
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -62,13 +69,14 @@ public class BlogServiceImpl implements BlogService {
 	    	try 
 	    	{
 				String path=file.getAbsolutePath();
-//				for(MultipartFile f1:blogDto.getMedia())
-//				{
-//					path1=path+"/"+f1.getOriginalFilename();
-//					FileInputStream fis=new FileInputStream(path1);
-//				}
-				path1=path+"/"+img.getOriginalFilename();
-				img.transferTo(new File(path1));
+				for(MultipartFile f1:img)
+				{
+					String path1=path+"\\"+f1.getOriginalFilename();
+					f1.transferTo(new File(path1));
+					fullPath.add(path1);
+				}
+//				fullPath=path+"\\"+img.getOriginalFilename();
+//				img.transferTo(new File(fullPath));
 				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -82,15 +90,64 @@ public class BlogServiceImpl implements BlogService {
 			}
 	    }
 
-		Blog blog = repo.save(objectMapper.dtoToBlogConverter(blogDto,img,path1));
+		Blog blog = repo.save(objectMapper.dtoToBlogConverter(blogDto,img,fullPath));
 		
 		return objectMapper.blogToDtoConverter(blog);
 	}
 
 	@Override
-	public BlogDto updateBlog(BlogDto blogDto, Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public BlogDto updateBlog(BlogUpdateDto updateDto, Long id) {
+		Blog blog=repo.getByBlogId(updateDto.getId());
+		if(updateDto.getContent() !=null)blog.setContent(updateDto.getContent());
+		if(updateDto.getVisiblity() !=null)blog.setVisiblity(updateDto.getVisiblity());
+		List<MultipartFile> images=new ArrayList<>();
+		if(updateDto.getMedia()!=null)
+		{
+			File file=new File("src\\main\\resources\\static\\image");
+			
+			List<String> fullPath=new ArrayList<>();
+			List<String> fileName=new ArrayList<>();
+			if(!file.isDirectory())
+			{
+				try {
+					Files.createDirectories(Path.of("src\\main\\resources\\static\\image"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		    if(file.isDirectory())
+		    {
+		    	try 
+		    	{
+					String path=file.getAbsolutePath();
+					for(MultipartFile f1:updateDto.getMedia())
+					{
+						String path1=path+"\\"+f1.getOriginalFilename();
+						f1.transferTo(new File(path1));
+						fileName.add(f1.getOriginalFilename());
+						fullPath.add(path1);
+					}
+//					fullPath=path+"\\"+img.getOriginalFilename();
+//					img.transferTo(new File(fullPath));
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		    blog.setMediaPath(fullPath);
+		    blog.setMedia(fileName);
+		    blog.setUpdatedBy(id);
+		}
+		
+		return objectMapper.blogToDtoConverter(repo.save(blog));
 	}
 
 	@Override

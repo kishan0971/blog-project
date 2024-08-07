@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.in2it.blogservice.dto.BlogDto;
 import com.in2it.blogservice.model.Blog;
@@ -17,19 +18,19 @@ import com.in2it.blogservice.model.Blog;
 public class Converter {
 
 
-	public Blog dtoToBlogConverter(BlogDto dto,MultipartFile img,String mediaPath)
+	public Blog dtoToBlogConverter(BlogDto dto,List<MultipartFile> img,List<String> mediaPath)
 	{
 		Blog blog=new Blog();
 		blog.setContent(dto.getContent());
 		blog.setAuthorId(dto.getAuthorId());
-//		List<String> mediaNames=new ArrayList<>();
-//		for(MultipartFile file:dto.getMedia())
-//		{
-//			mediaNames.add(file.getName());
-//		}
+		List<String> mediaNames=new ArrayList<>();
+		for(MultipartFile file:dto.getMedia())
+		{
+			mediaNames.add(file.getOriginalFilename());
+		}
 //		
-//		blog.setMedia(mediaNames);
-		blog.setMedia(img.getOriginalFilename());
+		blog.setMedia(mediaNames);
+//		blog.setMedia(img.getOriginalFilename());
 		blog.setTitle(dto.getTitle());
 		blog.setVisiblity(dto.getVisiblity());
 //		blog.setMediaPath(dto.getMediaPath());
@@ -67,7 +68,15 @@ public class Converter {
 		dto.setVisiblity(blog.getVisiblity());
 		dto.setProjectId(blog.getProjectId());
 		dto.setDepartmentId(blog.getDepartmentId());
-		dto.setImg(getImage(blog.getMediaPath()));
+		
+		
+		List<String> imgPath=new ArrayList<>();
+		
+		for(String temp:blog.getMedia()) 
+		{
+			imgPath.add(ServletUriComponentsBuilder.fromCurrentContextPath().path("/image/").path(temp).toUriString());
+		}
+		dto.setImgPath(imgPath);
 		//set to current date&time
 //		dto.setCretedDateTime(blog.getCretedDateTime());
 		
@@ -79,17 +88,7 @@ public class Converter {
 		
 		return dto;
 	}
-	public byte[] getImage(String path)
-	{
-		byte[] img=null;
-		try {
-			img = Files.readAllBytes(new File(path).toPath());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return img;
-	}
+	
 }
 
 
