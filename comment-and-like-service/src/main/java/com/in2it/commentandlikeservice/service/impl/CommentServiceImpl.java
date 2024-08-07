@@ -1,20 +1,17 @@
 package com.in2it.commentandlikeservice.service.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.in2it.commentandlikeservice.dto.CommentDto;
 import com.in2it.commentandlikeservice.mapper.CommentConvertor;
 import com.in2it.commentandlikeservice.model.Comment;
+import com.in2it.commentandlikeservice.payload.IdInvalidException;
 import com.in2it.commentandlikeservice.repository.CommentRepository;
 import com.in2it.commentandlikeservice.service.CommentService;
 import com.in2it.commentandlikeservice.service.FileService;
@@ -51,6 +48,7 @@ public class CommentServiceImpl implements CommentService {
 	
 	public List<CommentDto> getAllComment() {
 		List<Comment> commentList=commentRepository.findAll();
+//		List<Comment> commentList=commentRepository.findByStatus("Active");
 		List<CommentDto> commentDtoList=new ArrayList<>();
 		for(Comment com: commentList) {
 			if(com != null) {
@@ -86,6 +84,17 @@ public class CommentServiceImpl implements CommentService {
 		return commentListDto;
 	}
 	
-
+	
+	public Boolean deleteCommentId(Long id) {
+		
+		if(id>0) {
+			commentRepository.deleteById(id);
+			return	true;
+		}
+		else {
+			
+			throw new IdInvalidException(HttpStatus.NO_CONTENT  + "id not found, Please ! enter correct id.");
+			}
+	}
 
 }

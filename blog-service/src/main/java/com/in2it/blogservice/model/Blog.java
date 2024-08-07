@@ -10,18 +10,22 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
+@ToString
+@Getter
+@Setter
 public class Blog {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private long departmentId;
 	private long projectId;
@@ -38,12 +42,18 @@ public class Blog {
 	private int likeCount;
 	
 //	private List<String> media;
-	private List<String> media;
-	private List<String> mediaPath;
-//	private List<String> mediaPath;
-	private long updatedBy;
 	
+	private LocalDateTime cretedDateTime;
+	
+	
+	private long deletedBy;
 	
 
-	private LocalDateTime cretedDateTime;
+	 private String status;
+	 
+	 
+	 
+	 private String mediaFile;
+	 
+	 private String mediaPath;
 }

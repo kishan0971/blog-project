@@ -1,12 +1,11 @@
 package com.in2it.blogservice.dto;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -16,18 +15,23 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
+@ToString
+@Getter
+@Setter
 public class BlogDto {
 	
-	@NotNull
+
 	@Hidden
 	private long id;
+	
 	@NotNull
 	private long departmentId;
 	@NotNull
@@ -39,19 +43,30 @@ public class BlogDto {
 	@NotBlank(message = "content cannot be blank")
 	private String content;
 	private String visiblity;
-	@Hidden	
 	private int commentCount;
-	@Hidden
 	private int likeCount;
-	@JsonProperty(access = Access.WRITE_ONLY)
-	private List<MultipartFile> media;
-//	private MultipartFile media;
-	@Hidden
-	private List<String> imgPath;
+	
 	@NotNull
 	private long authorId;
 //	private LocalDateTime cretedDateTime;
-//	private byte[] img;
+	
+	@Hidden
+	private long deletedBy;
+	
+	@Hidden
+	 private String status;
+	 
+//	 private List<MultipartFile> media;
+	 
+	 @JsonProperty(access = Access.WRITE_ONLY)
+	 private MultipartFile media;
+	 
+	 @Hidden
+	 private String mediaFile;
+
+
+	 @Hidden
+	 private String mediaPath;
 	
 	
 }

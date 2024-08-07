@@ -15,4 +15,6 @@ public interface CommentService {
 	public List<CommentDto> getAllComment();
 	public List<CommentDto> getByBlogId(Long id);
 	public List<CommentDto> getByUserName(String usename);
+	public Boolean deleteCommentId(Long id);
+	
 }

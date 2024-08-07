@@ -1,5 +1,6 @@
 package com.in2it.commentandlikeservice.mapper;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -22,7 +23,10 @@ public class CommentConvertor {
 //				commentDto.getAuthor()
 				);
 				comment.setDate(new Date());
-				
+				comment.setCreatedDate(LocalDate.now());
+				comment.setDeletedAt(LocalDate.now());
+				comment.setDeletedBy(commentDto.getDeletedBy());
+				comment.setStatus("Active");
 		return comment;
 	}
 	
@@ -39,7 +43,10 @@ public class CommentConvertor {
 //				comment.getAuthor()
 				);
 				commentDto.setDate(new Date());
-				
+				commentDto.setStatus(comment.getStatus());
+				commentDto.setCreatedDate(comment.getCreatedDate());
+				commentDto.setDeletedAt(comment.getDeletedAt());
+				commentDto.setDeletedBy(comment.getDeletedBy());
 		return commentDto;
 	}
 
