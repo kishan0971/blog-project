@@ -47,33 +47,34 @@ public class BlogServiceController {
 	}
 	
 
+	
 	@PutMapping(path="/update/{updatedByUserId}" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<BlogDto> updateBlog(@RequestBody  BlogUpdateDto updateDto, @Valid @PathVariable("updatedByUserId") long id) {
+	public ResponseEntity<BlogDto> updateBlog(@RequestBody  BlogUpdateDto updateDto, @Valid @PathVariable("updatedByUserId") String authorId) {
 
-		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateBlog(updateDto, id));
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateBlog(updateDto, authorId));
 
 	}
 	
 	@PutMapping("/updateLike")
-	public ResponseEntity<BlogDto> updateLike(@RequestParam  Long id ,@RequestParam Long totalLikeCount) {
-		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateLike(totalLikeCount, id));
+	public ResponseEntity<BlogDto> updateLike(@RequestParam  Long blogId ,@RequestParam Long totalLikeCount) {
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateLike(totalLikeCount, blogId));
 	}
 	
 	@PutMapping("/updateComment")
-	public ResponseEntity<BlogDto> updateComment(@RequestParam Long id ,@RequestParam Long totalCommentCount) {
-		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateComment(totalCommentCount, id));
+	public ResponseEntity<BlogDto> updateComment(@RequestParam Long blogId ,@RequestParam Long totalCommentCount) {
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateComment(totalCommentCount, blogId));
 	}
 
-	@DeleteMapping("/deleteByBlogId/{id}")
-	public ResponseEntity<Boolean> deleteBlog(@PathVariable Long id , @RequestParam long userId) {
+	@DeleteMapping("/deleteByBlogId/{blogId}")
+	public ResponseEntity<Boolean> deleteBlog(@PathVariable Long blogId , @RequestParam String userId) {
 		
 	
-		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlog(id,userId));
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlog(blogId,userId));
 	
 	}
 	
 	@DeleteMapping("/deleteByTitle/{title}")
-	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title,  @RequestParam long userId){
+	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title,  @RequestParam String userId){
 		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlogByTitle(title, userId));
 	}
 	
@@ -91,19 +92,19 @@ public class BlogServiceController {
 
 	// pagination
 
-	@GetMapping("/getByAuthId/{id}")
-	 public	ResponseEntity<List<BlogDto>> getBlogsByAutherId(@PathVariable @Valid long id) {
+	@GetMapping("/getByUserId/{userId}")
+	 public	ResponseEntity<List<BlogDto>> getBlogsByAutherId(@PathVariable @Valid String userId) {
 
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getByAutherID(id));
+			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getByAutherID(userId));
 
 	}
 	
 	
 	@GetMapping("/getByBlogId/{blogId}")
-	public ResponseEntity<BlogDto> getBlogById(@PathVariable(value = "blogId") @Valid Long id) {
+	public ResponseEntity<BlogDto> getBlogById(@PathVariable(value = "blogId") @Valid Long blogId) {
 
 	
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlogById(id));
+			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlogById(blogId));
 
 	}
 

@@ -30,7 +30,7 @@ public class Blog {
 	private long departmentId;
 	private long projectId;
 	@NotNull
-	private long authorId;
+	private String authorId;
 	
 	@NotNull
 	private String title;
@@ -41,13 +41,9 @@ public class Blog {
 	
 	private long commentCount;
 	private long likeCount;
-	
-//	private List<String> media;
-	
-	
-	
-	private long deletedBy;
-	private long updatedBy;
+
+	private String deletedBy;
+	private String updatedBy;
 	
 	
 

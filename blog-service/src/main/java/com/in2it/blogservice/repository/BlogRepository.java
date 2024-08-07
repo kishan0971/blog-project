@@ -20,8 +20,8 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
 	@Query(value= "select  * from blog where status='Active' and title =%:title% ", nativeQuery = true)
 	 List<Blog> findByTitle(String title);
 	
-	@Query(value= "select  * from blog where status='Active' and author_id =%:authorId% ", nativeQuery = true)
-	 List<Blog> findByAuthorId(long authorId);
+	@Query(value= "select  * from blog where status='Active' and author_id =%:userId% ", nativeQuery = true)
+	 List<Blog> findByAuthorId(String userId);
 	
 
 	@Query(value= "select  * from blog where status='Active'", nativeQuery = true)
@@ -33,10 +33,10 @@ public interface BlogRepository extends JpaRepository<Blog, Long>{
 	
 	@Modifying
 	@Query(value= "update  blog set  status='InActive', deleted_by=%:userId%  , deleted_date_time=%:time% where  id=%:id%", nativeQuery = true)
-	 void deleteBlogById(long id , long userId ,LocalDateTime time);
+	 void deleteBlogById(long id , String userId ,LocalDateTime time);
 	
 	@Modifying
 	@Query(value= "update  blog set  status='InActive', deleted_by=%:userId%  , deleted_date_time=%:time% where  title=%:title%", nativeQuery = true)
-	void deleteBytitle(String title, long userId ,LocalDateTime time);
+	void deleteBytitle(String title, String userId ,LocalDateTime time);
 	
 }

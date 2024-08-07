@@ -1,6 +1,7 @@
 package com.in2it.blogservice.dto;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -33,8 +34,12 @@ public class BlogDto {
 	
 	@NotNull
 	private long departmentId;
+	
 	@NotNull
 	private long projectId;
+	
+	@NotNull
+	private String authorId;    // Taking autherId as  userName
 	
 	@Size(max = 50,min = 2,message = "title must not be longer than 50 characters and not be less than 3 characters")
 	@NotBlank(message = "title cannot be blank") 
@@ -49,17 +54,20 @@ public class BlogDto {
 	@Hidden
 	private long likeCount;
 	
-	@NotNull
-	private long authorId;
+	
 
 	
 	@Hidden
-	private long deletedBy;
+	private String deletedBy;
 	
 	 @Hidden
 	 @JsonProperty(access = Access.WRITE_ONLY)
 	 private String status;
 	 
+	 @Hidden
+	 private LocalDateTime cretedDateTime;
+	 @Hidden
+	 private LocalDateTime updatedDateTime;
 
 	 
 	 @JsonProperty(access = Access.WRITE_ONLY)
@@ -72,5 +80,9 @@ public class BlogDto {
 	 @Hidden
 	 private List<String> mediaPath;
 	
+	 
+	 
+//	 @Hidden
+//	 private LocalDateTime deletedDateTime;
 	
 }

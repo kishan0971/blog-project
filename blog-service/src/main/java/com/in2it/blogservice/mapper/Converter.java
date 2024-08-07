@@ -86,7 +86,9 @@ public class Converter {
 	    dto.setStatus(blog.getStatus());
         dto.setMediaFile(blog.getMediaFile()); 
         dto.setMediaPath(blog.getMediaPath());
-	    
+        
+        dto.setCretedDateTime(blog.getCretedDateTime());
+	    dto.setUpdatedDateTime(blog.getUpdatedDateTime());
 		return dto;
 	}
 

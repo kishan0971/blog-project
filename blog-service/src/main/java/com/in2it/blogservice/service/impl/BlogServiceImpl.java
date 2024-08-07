@@ -22,10 +22,12 @@ import com.in2it.blogservice.repository.BlogRepository;
 import com.in2it.blogservice.service.BlogService;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Component
 @Transactional
+@Slf4j
 public class BlogServiceImpl implements BlogService {
 
 	
@@ -93,7 +95,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	// This method is used to update BLOG with Blog_id with limited permissions 
 	@Override
-	public BlogDto updateBlog(BlogUpdateDto updateDto, Long id) {
+	public BlogDto updateBlog(BlogUpdateDto updateDto, String authorId) {
 		Blog blog=null;
 		try
 		{
@@ -104,7 +106,7 @@ public class BlogServiceImpl implements BlogService {
 				if(updateDto.getVisiblity() !=null)blog.setVisiblity(updateDto.getVisiblity());
 				if(updateDto.getTitle() !=null)blog.setTitle(updateDto.getTitle());
 				blog.setUpdatedDateTime(LocalDateTime.now());
-				blog.setUpdatedBy(id);
+				blog.setUpdatedBy(authorId);
 			}
 			else {
 				throw new InfoMissingException("Something went wrong ! Please try again.");
@@ -159,7 +161,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	// soft delete with blog_id and save user_id whose delete this post
 	@Override
-	public Boolean deleteBlog(long id, long userId) {
+	public Boolean deleteBlog(long id, String userId) {
 
 		if (id > 0) {
 			repo.deleteBlogById(id,userId, LocalDateTime.now());
@@ -175,7 +177,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	// soft delete with title and save user_id whose delete this post
 	@Override
-	public Boolean deleteBlogByTitle(String title, long userId) {
+	public Boolean deleteBlogByTitle(String title, String userId) {
 
 		if (title != null) {
 			repo.deleteBytitle(title,userId, LocalDateTime.now());
@@ -215,6 +217,8 @@ public class BlogServiceImpl implements BlogService {
 	public List<BlogDto> getBlog() {
 
 		List<Blog> blog = repo.findAll();
+		
+		log.info("----------------------------------"+blog);
 
 		List<BlogDto> blogDtoList = new ArrayList<>();
 
@@ -236,9 +240,9 @@ public class BlogServiceImpl implements BlogService {
 	
 	
 	//  Get blog by userId or we can say unique userName
-	public List<BlogDto> getByAutherID(long id) {
+	public List<BlogDto> getByAutherID(String userId) {
 
-		List<Blog> byAuthorId = repo.findByAuthorId(id);
+		List<Blog> byAuthorId = repo.findByAuthorId(userId);
 
 		List<BlogDto> blogDtoList = new ArrayList<>();
 
