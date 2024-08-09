@@ -58,6 +58,11 @@ public class CommentServiceImpl implements CommentService {
 //		return commentDtoList;
 //	}
 
+	public Comment getByCommentId(Long commentId) {
+		Comment com=commentRepository.findById(commentId).get();
+		return com;
+		
+	}
 	public List<CommentDto> getByBlogId(Long id) {
 		List<Comment> commentList = commentRepository.findByBlogId(id);
 		List<CommentDto> commentListDto = new ArrayList<>();
@@ -94,13 +99,16 @@ public class CommentServiceImpl implements CommentService {
 		}
 	}
 	
-	public List<Comment> deleteByBlogId(Long id){
+	public List<Comment> deleteByBlogId(Long id,Long commentId){
 		List<Comment> comments=commentRepository.findByBlogId(id);
 		List<Comment> deleteComments= new ArrayList<>();
+		Comment commentByCommentId=commentRepository.findById(commentId).get();
 		for(Comment com:comments) {
+			if(commentByCommentId.getId()==com.getId() ) {
 			com.setStatus("InActive");
 			Comment c=commentRepository.save(com);
 			deleteComments.add(c);
+		}
 		}
 		return deleteComments;
 	}
