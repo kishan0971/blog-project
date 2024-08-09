@@ -34,39 +34,53 @@ public class BlogDto {
 	
 	@NotNull
 	private long departmentId;
+	
 	@NotNull
-	private long projectId;
+	private long teamId;
+	
+	@NotNull
+	private String authorId;    // Taking autherId as  userName
 	
 	@Size(max = 50,min = 2,message = "title must not be longer than 50 characters and not be less than 3 characters")
 	@NotBlank(message = "title cannot be blank") 
 	private String title;
+	
 	@NotBlank(message = "content cannot be blank")
 	private String content;
 	private String visiblity;
-	private int commentCount;
-	private int likeCount;
-	
-	@NotNull
-	private long authorId;
-//	private LocalDateTime cretedDateTime;
 	
 	@Hidden
-	private long deletedBy;
+	private long commentCount;
 	
 	@Hidden
+	private long likeCount;
+
+	@Hidden
+	private String deletedBy;
+	
+	 @Hidden
+	 @JsonProperty(access = Access.WRITE_ONLY)
 	 private String status;
 	 
-//	 private List<MultipartFile> media;
+	 @Hidden
+	 private LocalDateTime cretedDateTime;
+	 @Hidden
+	 private LocalDateTime updatedDateTime;
+
 	 
 	 @JsonProperty(access = Access.WRITE_ONLY)
-	 private MultipartFile media;
+	 private List<MultipartFile> media;
 	 
 	 @Hidden
-	 private String mediaFile;
+	 private List<String> mediaFile;
 
 
 	 @Hidden
-	 private String mediaPath;
+	 private List<String> mediaPath;
 	
+	 
+	 
+//	 @Hidden
+//	 private LocalDateTime deletedDateTime;
 	
 }

@@ -1,5 +1,6 @@
 package com.in2it.blogservice.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,26 +17,28 @@ import com.in2it.blogservice.model.Blog;
 public interface BlogRepository extends JpaRepository<Blog, Long>{
     
 
-	@Query(value= "select  * from blog where status='Active' and title =%:title% ", nativeQuery = true)
-	 List<Blog> findByTitle(String title);
+//	@Query(value= "select  * from blog where status='ACTIVE' and title like %:title% ", nativeQuery = true)
+	 List<Blog> findByTitleContainingAllIgnoringCaseAndStatus(String title, String status);
 	
-	@Query(value= "select  * from blog where status='Active' and author_id =%:authorId% ", nativeQuery = true)
-	 List<Blog> findByAuthorId(long authorId);
+	@Query(value= "select  * from blog where status='ACTIVE' and author_id =%:autherId% ", nativeQuery = true)
+	 List<Blog> findByAuthorId(String autherId);
 	
 
-	@Query(value= "select  * from blog where status='Active'", nativeQuery = true)
+	@Query(value= "select  * from blog where status='ACTIVE'", nativeQuery = true)
 	 List<Blog> findAll();
 	
-	@Query(value= "select  * from blog where id=%:id% and status='Active'", nativeQuery = true)
+	@Query(value= "select  * from blog where id=%:id% and status='ACTIVE'", nativeQuery = true)
 	Blog getByBlogId(long id);
 		
 	
 	@Modifying
-	@Query(value= "update  blog set  status='InActive' where  id=%:id%", nativeQuery = true)
-	 void deleteBlogById(Long id);
+	@Query(value= "update  blog set  status='INACTIVE', deleted_by=%:deletedBy%  , deleted_date_time=%:time% where  id=%:id%", nativeQuery = true)
+	 void deleteBlogById(long id , String deletedBy ,LocalDateTime time);
 	
 	@Modifying
-	@Query(value= "update  blog set  status='InActive' where  title=%:title%", nativeQuery = true)
-	void deleteBytitle(String title);
+	@Query(value= "update  blog set  status='INACTIVE', deleted_by=%:autherId%  , deleted_date_time=%:time% where  id=%:blogId%", nativeQuery = true)
+	void deleteByTitleContainingAllIgnoringCaseAndStatus(long blogId, String autherId ,LocalDateTime time);
 	
+	@Query(value= "select  * from blog where status='ACTIVE'and team_id=%:teamId%", nativeQuery = true)
+	List<Blog> getByTeamId(long teamId);
 }

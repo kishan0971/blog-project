@@ -29,35 +29,25 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String content;
-	private String media;
+	private List<String> media;
 	@NotNull
 	private long blogId;
-//	private long authorID;
 	@NotNull
 	private String userName;
 	private Date date;
 	private String status;
-//	@Transient
-//	private Blog blog;
-
-//	@Transient
-//	private Author author;
 	private LocalDate createdDate;
 	private String deletedBy;
 	private LocalDate deletedAt;
-//	private	List<String> media;
 	private List<String> mediaPath;
 
-	public Comment(String content, String media, long blogId, String userName, Date date) {
+	public Comment(String content, List<String> media, long blogId, String userName, Date date) {
 		super();
 		this.content = content;
 		this.media = media;
 		this.blogId = blogId;
-//		this.authorID = authorID;
 		this.userName = userName;
 		this.date = date;
-//		this.blog = blog;
-//		this.author = author;
 		this.createdDate = createdDate;
 		this.deletedAt = deletedAt;
 		this.deletedBy = deletedBy;

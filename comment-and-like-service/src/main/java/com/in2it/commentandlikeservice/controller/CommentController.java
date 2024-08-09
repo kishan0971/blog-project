@@ -29,7 +29,7 @@ public class CommentController {
 	@PostMapping(path = "/post", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<CommentDto> createComment(@ModelAttribute CommentDto commentDto) {
 		try {
-			System.out.println("++++++++++");
+			
 			CommentDto createComment = commentService.saveComment(commentDto, commentDto.getFile());
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(createComment);
@@ -56,14 +56,14 @@ public class CommentController {
 		}
 	}
 
-	@GetMapping("/getByUserName/{username}")
-	public ResponseEntity<List<CommentDto>> getCommentByUserName(@PathVariable String username) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(commentService.getByUserName(username));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
+//	@GetMapping("/getByUserName/{username}")
+//	public ResponseEntity<List<CommentDto>> getCommentByUserName(@PathVariable String username) {
+//		try {
+//			return ResponseEntity.status(HttpStatus.OK).body(commentService.getByUserName(username));
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//	}
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Boolean> deleteCommentById(@PathVariable Long id) {
@@ -72,7 +72,7 @@ public class CommentController {
 
 	}
 	
-	@DeleteMapping("/deleteByBlogId/{commentId}/{blogId}")
+	@DeleteMapping("/deleteByBlogId/{blogId}/{commentId}")
 	public ResponseEntity<List<Comment>> deleteCommentByBlogId(@PathVariable Long blogId,@PathVariable Long commentId) {
 
 		try {
@@ -84,7 +84,7 @@ public class CommentController {
 
 	}
 
-	public Boolean deleteComment(Long id) {
+	public Comment updateComment(Comment comment ,Long id) {
 		return null;
 
 	}

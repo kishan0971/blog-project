@@ -27,14 +27,14 @@ public class CommentDto {
 	private long id;
 	private String content;
 	@JsonIgnore
-	private String media;
+	private List<String> media;
 	private long blogId;
 //	private long authorID;
 	private String userName;
 	@JsonIgnore
 	private Date date;
 	@JsonIgnore
-	private MultipartFile file;
+	private List<MultipartFile> file;
 	@Hidden
 	private String status;
 
@@ -49,7 +49,7 @@ public class CommentDto {
 	 * private Blog blog; 
 	 * private Author author;
 	 */
-	public CommentDto(long id, String content, String media, long blogId, String userName, Date date) {
+	public CommentDto(long id, String content, List<String> media, long blogId, String userName, Date date) {
 		super();
 		this.id = id;
 		this.content = content;

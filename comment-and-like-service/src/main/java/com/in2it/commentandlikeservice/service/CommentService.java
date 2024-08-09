@@ -9,7 +9,7 @@ import com.in2it.commentandlikeservice.model.Comment;
 
 public interface CommentService {
 
-	public CommentDto saveComment(CommentDto commentDto, MultipartFile file);
+	public CommentDto saveComment(CommentDto commentDto, List<MultipartFile> file);
 //	public Comment saveComment(CommentDto commentDto, MultipartFile file);
 //	public List<Comment> getAllComment();
 //	public List<CommentDto> getAllComment();

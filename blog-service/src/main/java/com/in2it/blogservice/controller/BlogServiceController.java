@@ -1,5 +1,6 @@
 package com.in2it.blogservice.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.in2it.blogservice.customException.InfoMissingException;
 import com.in2it.blogservice.dto.BlogDto;
+import com.in2it.blogservice.dto.BlogUpdateDto;
 import com.in2it.blogservice.service.impl.BlogServiceImpl;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@Slf4j
+
 @RequestMapping("/in2it-blog")
 public class BlogServiceController {
 	@Autowired
@@ -34,82 +38,92 @@ public class BlogServiceController {
 	 */
 
 	@PostMapping(path = "/posts", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<?> saveBlogWithFile( @ModelAttribute BlogDto blogDto) {
-
-		BlogDto saveBlogWithFile = serviceImpl.saveBlogWithFile(blogDto,blogDto.getMedia());
-		
+	public ResponseEntity<?> saveBlogWithFile(@ModelAttribute BlogDto blogDto) {
+		List<MultipartFile> media = blogDto.getMedia();
+		BlogDto saveBlogWithFile = serviceImpl.saveBlogWithFile(blogDto, media);
 		return ResponseEntity.status(HttpStatus.OK).body(saveBlogWithFile);
-		
 	}
-	
-	
-	
-	
-	
-	@PutMapping(path="/update" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<BlogDto> updateBlog(@RequestBody BlogDto blogDto, @Valid @PathVariable("authId") Long id) {
 
-		if (blogDto != null || id > 0) {
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateBlog(blogDto, id));
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(serviceImpl.updateBlog(blogDto, id));
-		}
+	@PutMapping(path = "/update/{updatedByUserId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<BlogDto> updateBlog(@RequestBody BlogUpdateDto updateDto,
+			@Valid @PathVariable("updatedByUserId") String updatedBy) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateBlog(updateDto, updatedBy));
 
 	}
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Boolean> deleteBlog(@PathVariable Long id) {
-		
-	
-		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlog(id));
-	
+	@PutMapping("/updateLike")
+	public ResponseEntity<BlogDto> updateLike(@RequestParam Long blogId, @RequestParam Long totalLikeCount) {
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateLike(totalLikeCount, blogId));
 	}
-	
+
+	@PutMapping("/updateComment")
+	public ResponseEntity<BlogDto> updateComment(@RequestParam Long blogId, @RequestParam Long totalCommentCount) {
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateComment(totalCommentCount, blogId));
+	}
+
+	@DeleteMapping("/deleteByBlogId/{blogId}")
+	public ResponseEntity<Boolean> deleteBlog(@PathVariable Long blogId, @RequestParam String deletedBy) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlog(blogId, deletedBy));
+
+	}
+
 	@DeleteMapping("/deleteByTitle/{title}")
-	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title){
-		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlogByTitle(title));
+	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title, @RequestParam Long blogId) {
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlogByTitle(title, blogId));
 	}
-	
 
 	// pagination
-	
 
 	// pagination
 	@GetMapping("/get")
-     public	ResponseEntity<List<BlogDto>> getAllBlog() {
-		
-
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlog());
-
+	public ResponseEntity<List<BlogDto>> getAllBlog() {
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlog());
 	}
 
 	// pagination
 
-	@GetMapping("/getByAuthId/{id}")
-	 public	ResponseEntity<List<BlogDto>> getBlogsByAutherId(@PathVariable @Valid long id) {
+	@GetMapping("/getByAutherId/{autherId}")
+	public ResponseEntity<List<BlogDto>> getBlogsByAutherId(@PathVariable @Valid String autherId) {
 
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getByAutherID(id));
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getByAutherID(autherId));
 
 	}
-	
-	
+
 	@GetMapping("/getByBlogId/{blogId}")
-	public ResponseEntity<BlogDto> getBlogById(@PathVariable(value = "blogId") @Valid Long id) {
-
-	
-			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlogById(id));
-
+	public ResponseEntity<BlogDto> getBlogById(@PathVariable(value = "blogId") @Valid Long blogId) {
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlogById(blogId));
 	}
 
-	
 	// pagination
 	@GetMapping("/getByTitle/{blogTitle}")
-	public ResponseEntity<List<BlogDto>> getBlogByTitle(@PathVariable(value = "blogTitle")  String title) {
-
-
+	public ResponseEntity<List<BlogDto>> getBlogByTitle(@PathVariable(value = "blogTitle") String title) {
+		if(title!=null) {
+			
 			return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlogTitle(title));
+		}else {
+			
+			throw new InfoMissingException("please write valid info");
+		}
+	}
+	
+	
+	@GetMapping("/getByTeamId/{teamId}")
+	public ResponseEntity< List<BlogDto>> getByVisibility(@PathVariable long teamId){
 		
-
+		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getByVisibility(teamId));
+		
+	}
+	
+	
+	@GetMapping("/showAllVigibility")
+	public List<String> showVidibility(){
+		
+		List<String> visibility= Arrays.asList("TEAM","EVERYONE");
+		
+		return  visibility;
+		
 	}
 
 }
