@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -50,9 +51,6 @@ public class BlogServiceImpl implements BlogService {
 		// Set original file name is this list.
 		List<String> originalFilenames = new ArrayList<>();
 		
-		// Set Media file path where our Media are stored in file system.
-		List<String> fileLink = new ArrayList<>();
-
 		
 		if (!multipartFile.isEmpty() && blogDto != null) {
 
@@ -73,15 +71,8 @@ public class BlogServiceImpl implements BlogService {
 			Blog dtoToBlogConverter = objectMapper.dtoToBlogConverter(blogDto, originalFilenames, uploadFilePath);
 
 			
-			// here we can generate link to get media  like this - http://localhost:8080/image/filename.xyz
-			for (MultipartFile multipart : multipartFile) {
-
-				String uriString = ServletUriComponentsBuilder.fromCurrentContextPath().path("/image/")
-						.path(multipart.getOriginalFilename()).toUriString();
-				       fileLink.add(uriString);
-			}
-			
-			dtoToBlogConverter.setMediaPath(fileLink);
+			// calling random generating URI in converter class
+			dtoToBlogConverter.setMediaPath(objectMapper.genrateUriLink(multipartFile));
 
 			
 			// save information in database
@@ -95,31 +86,28 @@ public class BlogServiceImpl implements BlogService {
 	
 	// This method is used to update BLOG with Blog_id with limited permissions 
 	@Override
-	public BlogDto updateBlog(BlogUpdateDto updateDto, String authorId) {
-		Blog blog=null;
-		try
-		{
-			blog=repo.getByBlogId(updateDto.getId());
-			if(blog!=null) {
+	public BlogDto updateBlog(BlogUpdateDto updateDto, String updatedBy) {
+		
+		     Blog blog=null;
+		
+			blog=repo.getByBlogId(updateDto.getId() );
+			
+			
+			
+			if((blog!=null && updatedBy!=null) && blog.getId()==updateDto.getId()) {
 				
 				if(updateDto.getContent() !=null)blog.setContent(updateDto.getContent());
 				if(updateDto.getVisiblity() !=null)blog.setVisiblity(updateDto.getVisiblity());
 				if(updateDto.getTitle() !=null)blog.setTitle(updateDto.getTitle());
 				blog.setUpdatedDateTime(LocalDateTime.now());
-				blog.setUpdatedBy(authorId);
+				blog.setUpdatedBy(updatedBy);
+				return objectMapper.blogToDtoConverter(repo.save(blog));
 			}
 			else {
-				throw new InfoMissingException("Something went wrong ! Please try again.");
+				throw new UserNotFoundException(" Insufficient information, Please ! try again with sufficient information.");
 			}
 			
-		}
-		catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-
 		
-		return objectMapper.blogToDtoConverter(repo.save(blog));
 	}
 
 	
@@ -161,10 +149,13 @@ public class BlogServiceImpl implements BlogService {
 	
 	// soft delete with blog_id and save user_id whose delete this post
 	@Override
-	public Boolean deleteBlog(long id, String userId) {
+	public Boolean deleteBlog(long id, String deletedBy) {
 
-		if (id > 0) {
-			repo.deleteBlogById(id,userId, LocalDateTime.now());
+		 BlogDto blog = getBlogById(id);
+		
+		if (blog.getId()==id && deletedBy!=null) {
+			
+			repo.deleteBlogById(id,deletedBy, LocalDateTime.now());
 
 			return true;
 		} else {
@@ -175,28 +166,51 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	
-	// soft delete with title and save user_id whose delete this post
+	// soft delete with title and save user_id whose delete this post 
 	@Override
-	public Boolean deleteBlogByTitle(String title, String userId) {
+	public Boolean deleteBlogByTitle(String title, long blogId) {
 
-		if (title != null) {
-			repo.deleteBytitle(title,userId, LocalDateTime.now());
-			return true;
-		} else {
+		boolean flag=false;
+		
+		List<BlogDto> blog = getBlogTitle(title);
+		
+		
+		
+		if(!blog.isEmpty()) {
+			
+			for (BlogDto blogDto : blog) {
+				
+				if (title!=null && blogDto.getId()==blogId) {
+				
+					repo.deleteByTitleContainingAllIgnoringCaseAndStatus(blogDto.getId(), blogDto.getAuthorId(), LocalDateTime.now());
+					
+					flag= true;
+					
+					break;
+				} else {
 
+					throw new InfoMissingException(HttpStatus.NO_CONTENT + " Data not found, Please ! try again .");
+				}
+			}
+		}
+		else {
 			throw new InfoMissingException(HttpStatus.NO_CONTENT + " Data not found, Please ! try again .");
 		}
+	
+		
+	return flag;
+		
+		
 	}
 
 	
 	// Get blog with title 
 	@Override
 	public List<BlogDto> getBlogTitle(String title) {
+		
 
-		List<Blog> blog = repo.findByTitle(title);
-
+		List<Blog> blog = repo.findByTitleContainingAllIgnoringCaseAndStatus(title,"ACTIVE");
 		List<BlogDto> blogDtoList = new ArrayList<>();
-
 		for (Blog blog2 : blog) {
 
 			if (blog2 != null) {
@@ -240,23 +254,28 @@ public class BlogServiceImpl implements BlogService {
 	
 	
 	//  Get blog by userId or we can say unique userName
-	public List<BlogDto> getByAutherID(String userId) {
+	public List<BlogDto> getByAutherID(String autherId) {
 
-		List<Blog> byAuthorId = repo.findByAuthorId(userId);
+		List<Blog> byAuthorId = repo.findByAuthorId(autherId);
 
 		List<BlogDto> blogDtoList = new ArrayList<>();
 
-		for (Blog blog2 : byAuthorId) {
-
-			if (blog2 != null) {
-				BlogDto blogToDtoConverter = objectMapper.blogToDtoConverter(blog2);
-				blogDtoList.add(blogToDtoConverter);
-			} else {
-				throw new UserNotFoundException(HttpStatus.NO_CONTENT + "  Data not available, please ! Try again.");
+		if(!byAuthorId.isEmpty()) {
+			
+			for (Blog blog2 : byAuthorId) {
+				
+				if (blog2 != null) {
+					BlogDto blogToDtoConverter = objectMapper.blogToDtoConverter(blog2);
+					blogDtoList.add(blogToDtoConverter);
+				} 
 			}
+			
+			return blogDtoList;
+		}else {
+			throw new UserNotFoundException(HttpStatus.NO_CONTENT + "  Data not available, please ! Try again.");
 		}
+		
 
-		return blogDtoList;
 	}
 
 	
@@ -271,6 +290,31 @@ public class BlogServiceImpl implements BlogService {
 		} else {
 			throw new UserNotFoundException(HttpStatus.NO_CONTENT + "   Data not available, please ! Try again.");
 		}
+	}
+
+
+	@Override
+	public List<BlogDto> getByVisibility(long teamId) {
+	
+		List<Blog> byTeamId = repo.getByTeamId(teamId);
+		
+		List<BlogDto> dtos=new ArrayList<>();
+		
+		if(!byTeamId.isEmpty()) {
+			
+			for (Blog blog : byTeamId) {
+				
+				BlogDto blogToDtoConverter = objectMapper.blogToDtoConverter(blog);
+				dtos.add(blogToDtoConverter);
+			}
+			
+			return dtos;
+		}else {
+			throw new UserNotFoundException(HttpStatus.NO_CONTENT + "   Data not available, please ! Try again.");
+			
+		}
+		
+		
 	}
 
 

@@ -8,9 +8,12 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.in2it.blogservice.dto.BlogDto;
 import com.in2it.blogservice.model.Blog;
@@ -21,11 +24,12 @@ import com.in2it.blogservice.model.Blog;
 public class Converter {
 	
 	/*static way to create file path*/
-	public final String fileUploadDir="D:\\blog-project\\blog-service\\src\\main\\resources\\static\\image";
+//	public final String fileUploadDir="D:\\blog-project\\blog-service\\src\\main\\resources\\static\\image";
 	
 	/* dynamic way to create file path*/
-    //public final String fileUploadDir=new ClassPathResource("static/image/").getFile().getAbsolutePath();
+    public final String fileUploadDir=new ClassPathResource("static/image/").getFile().getAbsolutePath();
 	
+	private static long randomId=0;
 	
 	public Converter() throws IOException {
 		
@@ -48,13 +52,13 @@ public class Converter {
 		//set to current date&time
 		blog.setCretedDateTime(LocalDateTime.now());
 
-		blog.setProjectId(dto.getProjectId());
+		blog.setTeamId(dto.getTeamId());
 		blog.setDepartmentId(dto.getDepartmentId());
 
 		blog.setLikeCount(dto.getLikeCount());
 		blog.setCommentCount(dto.getCommentCount());
 		blog.setDeletedBy(dto.getDeletedBy());
-	    blog.setStatus("Active");
+	    blog.setStatus("ACTIVE");
 		
 		
 		return blog;
@@ -74,7 +78,7 @@ public class Converter {
 
 		dto.setTitle(blog.getTitle());
 		dto.setVisiblity(blog.getVisiblity());
-		dto.setProjectId(blog.getProjectId());
+		dto.setTeamId(blog.getTeamId());
 		dto.setDepartmentId(blog.getDepartmentId());
 
 	
@@ -94,13 +98,16 @@ public class Converter {
 
 
 	
+	
+	
 	// uploading file in file System
 	public List<String> uploadFile(List<MultipartFile> multipartFile) {
 
 		String fullPath=null;
 		
 		List<String> paths=new ArrayList<>();
-		
+		String uniqueID = UUID.randomUUID().toString();
+	
 		try {
 			
 			
@@ -113,7 +120,6 @@ public class Converter {
 			stream.read(data);
 			
 			// file write data 
-			
 			
 			System.out.println("full path +++++"+ fullPath);
 			FileOutputStream outputStream=new FileOutputStream(fullPath);
@@ -128,7 +134,9 @@ public class Converter {
 			
               for (MultipartFile multipartFile2 : multipartFile) {
 				
-				fullPath=fileUploadDir+File.separator+multipartFile2.getOriginalFilename();
+            	  randomId = generateUniqueId();
+            	  
+				fullPath=fileUploadDir+File.separator+randomId+multipartFile2.getOriginalFilename();
 				
 				paths.add(fullPath);
 				
@@ -145,6 +153,36 @@ public class Converter {
 		return paths;
 		
 	}
+	
+	
+	// Generating URIlink in response
+	public List<String> genrateUriLink(List<MultipartFile> multipartFile){
+		
+		List<String> fileLink = new ArrayList<>();
+		
+		for (MultipartFile multipart : multipartFile) {
+
+			String uriString = ServletUriComponentsBuilder.fromCurrentContextPath().path("/image/")
+					.path(randomId+multipart.getOriginalFilename()).toUriString();
+			       fileLink.add(uriString);
+			       
+		}
+		return fileLink;
+		
+	}
+	
+	
+	
+	
+	// Generating Random Id
+	  public static int generateUniqueId() {      
+	        UUID idOne = UUID.randomUUID();
+	        String str=""+idOne;        
+	        int uid=str.hashCode();
+	        String filterStr=""+uid;
+	        str=filterStr.replaceAll("-", "");
+	        return Integer.parseInt(str);
+	    }
 	
 	
 	

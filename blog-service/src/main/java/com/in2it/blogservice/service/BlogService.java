@@ -14,17 +14,19 @@ public interface BlogService {
 //	BlogDto saveBlog(BlogDto blogDto);
 	BlogDto	saveBlogWithFile(BlogDto blogDto,List<MultipartFile> multipartFile);
 	
-	BlogDto updateBlog(BlogUpdateDto updateDto, String authorId);
+	BlogDto updateBlog(BlogUpdateDto updateDto, String updatedBy);
 	BlogDto updateLike(Long totallikeCount ,Long id);
 	BlogDto updateComment(Long totalCommentCount,Long id);
 	
 	Boolean deleteBlog(long id, String userId);
-	Boolean deleteBlogByTitle(String title, String userId);
+	Boolean deleteBlogByTitle(String title, long blogId);
 	
 	BlogDto getBlogById(Long id);
 	List<BlogDto> getBlogTitle(String title);
 	List<BlogDto> getBlog();
 	List<BlogDto> getByAutherID(String userId);
 	
+	
+	List<BlogDto> getByVisibility(long teamId);
 
 }
