@@ -11,7 +11,7 @@ public class Like {
     @SequenceGenerator(name="like_seq",initialValue =1,  allocationSize=1)
     private Long id;
     private Long blogid;
-    private long userid=3;
+    private String userid;
 
     public Long getId() {
         return id;
@@ -29,11 +29,11 @@ public class Like {
         this.blogid = blogid;
     }
 
-    public long getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(long userid) {
+    public void setUserid(String userid) {
         this.userid = userid;
     }
 }

@@ -23,7 +23,7 @@ public class LikeServiceImpl implements LikeService {
     private BlogClient feign;
 
     @Override
-    public String likepost(long blogid, long userid) {
+    public String likepost(long blogid, String userid) {
         ResponseEntity<BlogDto> response = feign.getBlogById(blogid);
         BlogDto blog = response.getBody();
         //it checks if blog exist or not
