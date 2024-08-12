@@ -1,5 +1,6 @@
 package com.in2it.commentandlikeservice.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class CommentController {
 	@PostMapping(path = "/post", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<CommentDto> createComment(@ModelAttribute CommentDto commentDto) {
 		try {
-			
+
 			CommentDto createComment = commentService.saveComment(commentDto, commentDto.getFile());
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(createComment);
@@ -67,24 +68,24 @@ public class CommentController {
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Boolean> deleteCommentById(@PathVariable Long id) {
-
+		
 		return ResponseEntity.status(HttpStatus.OK).body(commentService.deleteCommentId(id));
 
 	}
-	
+
 	@DeleteMapping("/deleteByBlogId/{blogId}/{commentId}")
-	public ResponseEntity<List<Comment>> deleteCommentByBlogId(@PathVariable Long blogId,@PathVariable Long commentId) {
+	public ResponseEntity<List<Comment>> deleteCommentByBlogId(@PathVariable Long blogId,
+			@PathVariable Long commentId) {
 
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(commentService.deleteByBlogId(blogId,commentId));
-		}
-		catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.OK).body(commentService.deleteByBlogId(blogId, commentId));
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 
 	}
 
-	public Comment updateComment(Comment comment ,Long id) {
+	public Comment updateComment(Comment comment, Long id) {
 		return null;
 
 	}

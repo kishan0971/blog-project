@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,20 +64,26 @@ public class CommentConvertor {
 			}
 	    }
 		
-		Comment comment = new Comment(commentDto.getContent(), commentDto.getMedia(), commentDto.getBlogId(),
-				commentDto.getUserName(), commentDto.getDate());
-		comment.setDate(new Date());
-		comment.setCreatedDate(LocalDate.now());
-
+		Comment comment = new Comment();
+		comment.setContent(commentDto.getContent());
+		comment.setBlogId(commentDto.getBlogId());
+		comment.setMedia(mediaName);
+		comment.setMediaPath(mediaPath);
+		comment.setAuthorId(commentDto.getAuthorID());
+		comment.setCreatedDate(LocalDateTime.now());
 		comment.setStatus("Active");
+		
 		return comment;
 	}
 
 	public CommentDto commentToDtoConvertor(Comment comment) {
-		CommentDto commentDto = new CommentDto(comment.getId(), comment.getContent(), comment.getMedia(),
-				comment.getBlogId(), comment.getUserName(), comment.getDate());
-		commentDto.setDate(new Date());
-		commentDto.setStatus(comment.getStatus());
+		CommentDto commentDto = new CommentDto();
+		commentDto.setBlogId(comment.getBlogId());
+		commentDto.setContent(comment.getContent());
+		commentDto.setId(comment.getId());
+		commentDto.setMedia(comment.getMedia());
+		commentDto.setAuthorID(comment.getAuthorId());
+//		commentDto.setStatus(comment.getStatus());
 		commentDto.setCreatedDate(comment.getCreatedDate());
 		List<String> filesPath=new ArrayList<>();
 		for(String fileName:comment.getMedia()) {

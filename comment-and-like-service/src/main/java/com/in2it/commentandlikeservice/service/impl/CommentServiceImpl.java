@@ -1,5 +1,7 @@
 package com.in2it.commentandlikeservice.service.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,24 +26,24 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private CommentConvertor objectMapper;
-	@Autowired
-	private FileService fileService;
 
-	public CommentDto saveComment(CommentDto commentDto, MultipartFile file) {
+	public CommentDto saveComment(CommentDto commentDto, List<MultipartFile> file) {
 
-//		Comment comment=objectMapper.dtoToCommentConvertor(commentDto);
 		Comment comment = objectMapper.dtoToCommentConvertor(commentDto);
-		String uploadImage = null;
-		try {
-			uploadImage = fileService.uploadImage(file);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
+//		String uploadImage = null;
+//		try {
+//			uploadImage = fileService.uploadImage(file);
+//
+//		} catch (Exception e) {
+//
+//			e.printStackTrace();
+//		}
 //		comment.setMedia(uploadImage);
+
 		Comment com = commentRepository.save(comment);
+
 		CommentDto dto = objectMapper.commentToDtoConvertor(comment);
+
 		return dto;
 	}
 
@@ -101,21 +103,26 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	public List<Comment> deleteByBlogId(Long id, Long commentId) {
+
 		List<Comment> comments = commentRepository.findByBlogId(id);
 		List<Comment> deleteComments = new ArrayList<>();
 		Comment commentByCommentId = commentRepository.findById(commentId).get();
 		for (Comment com : comments) {
 			if (commentByCommentId.getId() == com.getId()) {
+
 				com.setStatus("InActive");
+
 				Comment c = commentRepository.save(com);
+				c.setDeletedAt(LocalDateTime.now());
 				deleteComments.add(c);
 			}
 		}
 		return deleteComments;
 	}
-	public Comment updateComment(Comment comment ,Long blogId,Long commentId) {
-		List<Comment> commentByBlogId=commentRepository.findByBlogId(blogId);
-		Comment commentByCommentId=commentRepository.findById(commentId).get();
+
+	public Comment updateComment(Comment comment, Long blogId, Long commentId) {
+		List<Comment> commentByBlogId = commentRepository.findByBlogId(blogId);
+		Comment commentByCommentId = commentRepository.findById(commentId).get();
 		return null;
 
 	}

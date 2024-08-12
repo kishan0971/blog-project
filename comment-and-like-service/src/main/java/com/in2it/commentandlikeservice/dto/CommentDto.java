@@ -1,6 +1,7 @@
 package com.in2it.commentandlikeservice.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -29,39 +30,14 @@ public class CommentDto {
 	@JsonIgnore
 	private List<String> media;
 	private long blogId;
-//	private long authorID;
-	private String userName;
-	@JsonIgnore
-	private Date date;
+
+	private String authorID;
 	@JsonIgnore
 	private List<MultipartFile> file;
-	@Hidden
-	private String status;
 
-	private LocalDate createdDate;
 	@Hidden
-	private String deletedBy;
-	private LocalDate deletedAt;
+	private LocalDateTime createdDate;
 
 	private List<String> mediaPath;
-
-	/*
-	 * private Blog blog; 
-	 * private Author author;
-	 */
-	public CommentDto(long id, String content, List<String> media, long blogId, String userName, Date date) {
-		super();
-		this.id = id;
-		this.content = content;
-		this.media = media;
-		this.blogId = blogId;
-//		this.authorID = authorID;
-		this.userName = userName;
-		this.date = date;
-		/*
-		 * this.blog = blog; this.author = author;
-		 */
-	}
-	
 
 }

@@ -1,6 +1,7 @@
 package com.in2it.commentandlikeservice.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -33,26 +34,14 @@ public class Comment {
 	@NotNull
 	private long blogId;
 	@NotNull
-	private String userName;
-	private Date date;
+	private String authorId;
 	private String status;
-	private LocalDate createdDate;
+	private LocalDateTime createdDate;
 	private String deletedBy;
-	private LocalDate deletedAt;
+	private LocalDateTime deletedAt;
 	private List<String> mediaPath;
 
-	public Comment(String content, List<String> media, long blogId, String userName, Date date) {
-		super();
-		this.content = content;
-		this.media = media;
-		this.blogId = blogId;
-		this.userName = userName;
-		this.date = date;
-		this.createdDate = createdDate;
-		this.deletedAt = deletedAt;
-		this.deletedBy = deletedBy;
-
-	}
+	
 	
 	
 }
