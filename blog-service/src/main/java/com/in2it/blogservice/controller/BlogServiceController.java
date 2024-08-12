@@ -41,6 +41,7 @@ public class BlogServiceController {
 	public ResponseEntity<?> saveBlogWithFile(@ModelAttribute BlogDto blogDto) {
 		List<MultipartFile> media = blogDto.getMedia();
 		BlogDto saveBlogWithFile = serviceImpl.saveBlogWithFile(blogDto, media);
+		
 		return ResponseEntity.status(HttpStatus.OK).body(saveBlogWithFile);
 	}
 
