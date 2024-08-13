@@ -75,7 +75,7 @@ public class BlogServiceImpl implements BlogService {
 			dtoToBlogConverter.setMediaPath(objectMapper.genrateUriLink(multipartFile));
 
 			
-			// save information in database
+	
 			blog = repo.save(dtoToBlogConverter);
 		}
 
@@ -296,7 +296,13 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public List<BlogDto> getByVisibility(long teamId) {
 	
+		
+		
 		List<Blog> byTeamId = repo.getByTeamId(teamId);
+		
+		
+		System.out.println("--------------------------------------------"+byTeamId);
+		
 		
 		List<BlogDto> dtos=new ArrayList<>();
 		

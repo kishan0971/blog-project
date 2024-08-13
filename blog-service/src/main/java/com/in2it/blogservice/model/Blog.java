@@ -20,18 +20,22 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @ToString
 @Getter
 @Setter
-
 public class Blog {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	
+	@NotNull
 	private long departmentId;
+	
+	@NotNull
 	private long teamId;
+	
 	@NotNull
 	private String authorId;
 	
