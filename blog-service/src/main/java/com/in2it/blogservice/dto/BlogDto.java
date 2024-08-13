@@ -46,6 +46,8 @@ public class BlogDto {
 	
 	@NotBlank(message = "content cannot be blank")
 	private String content;
+	
+	@Hidden
 	private String visiblity;
 	
 	@Hidden

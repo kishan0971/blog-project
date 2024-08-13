@@ -1,7 +1,9 @@
 package com.in2it.blogservice.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,12 +39,26 @@ public class BlogServiceController {
 	 * This method is used to insert blog in database.
 	 */
 
+//	@PostMapping(path = "/posts", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+//	public ResponseEntity<?> saveBlogWithFile(@ModelAttribute BlogDto blogDto) {
+//		List<MultipartFile> media = blogDto.getMedia();
+//		BlogDto saveBlogWithFile = serviceImpl.saveBlogWithFile(blogDto, media);
+//		
+//		return ResponseEntity.status(HttpStatus.OK).body(saveBlogWithFile);
+//	}
+	
+	
 	@PostMapping(path = "/posts", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<?> saveBlogWithFile(@ModelAttribute BlogDto blogDto) {
+	public Map<String, Object> saveBlogWithFile(@ModelAttribute BlogDto blogDto) {
+	
+		
+		Map<String, Object> map= new HashMap<>();
 		List<MultipartFile> media = blogDto.getMedia();
 		BlogDto saveBlogWithFile = serviceImpl.saveBlogWithFile(blogDto, media);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(saveBlogWithFile);
+		
+		  map.put("blog", saveBlogWithFile);
+		return map;
 	}
 
 	@PutMapping(path = "/update/{updatedByUserId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })

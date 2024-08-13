@@ -46,7 +46,8 @@ public class Converter {
 		blog.setMediaPath(uploadedPath);
 		
 		blog.setTitle(dto.getTitle());
-		blog.setVisiblity(dto.getVisiblity());
+//		blog.setVisiblity(dto.getVisiblity());
+		blog.setVisiblity("TEAM");
 
 		
 		//set to current date&time
