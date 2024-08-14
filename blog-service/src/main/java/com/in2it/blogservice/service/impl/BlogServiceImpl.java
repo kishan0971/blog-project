@@ -3,6 +3,7 @@ package com.in2it.blogservice.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -94,13 +95,16 @@ public class BlogServiceImpl implements BlogService {
 			
 			
 			
-			if((blog!=null && updatedBy!=null) && blog.getId()==updateDto.getId()) {
+			if((blog!=null && updatedBy!=null) && blog.getId().equals(updateDto.getId())) {
 				
-				if(updateDto.getContent() !=null)blog.setContent(updateDto.getContent());
-				if(updateDto.getVisiblity() !=null)blog.setVisiblity(updateDto.getVisiblity());
-				if(updateDto.getTitle() !=null)blog.setTitle(updateDto.getTitle());
+				if(!updateDto.getContent().isEmpty())blog.setContent(updateDto.getContent());
+				if(!updateDto.getVisiblity().isEmpty())blog.setVisiblity(updateDto.getVisiblity());
+				if(!updateDto.getTitle().isEmpty())blog.setTitle(updateDto.getTitle());
 				blog.setUpdatedDateTime(LocalDateTime.now());
 				blog.setUpdatedBy(updatedBy);
+				
+				
+				System.out.println("blog"+blog);
 				return objectMapper.blogToDtoConverter(repo.save(blog));
 			}
 			else {
@@ -113,7 +117,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	// update total like count
 	@Override
-	public BlogDto updateLike(Long totallikeCount ,Long id) {
+	public BlogDto updateLike(Long totallikeCount ,UUID id) {
 		
 		Blog blog = repo.getByBlogId(id);
 		
@@ -133,7 +137,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	// update total comment count
 	@Override
-	public BlogDto updateComment(Long totalCommentCount, Long id) {
+	public BlogDto updateComment(Long totalCommentCount, UUID id) {
            Blog blog = repo.getByBlogId(id);
 		
 		if(blog!=null) {
@@ -149,7 +153,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	// soft delete with blog_id and save user_id whose delete this post
 	@Override
-	public Boolean deleteBlog(long id, String deletedBy) {
+	public Boolean deleteBlog(UUID id, String deletedBy) {
 
 		 BlogDto blog = getBlogById(id);
 		
@@ -168,7 +172,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	// soft delete with title and save user_id whose delete this post 
 	@Override
-	public Boolean deleteBlogByTitle(String title, long blogId) {
+	public Boolean deleteBlogByTitle(String title, UUID blogId) {
 
 		boolean flag=false;
 		
@@ -281,7 +285,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	// Get blog by blog_id
 	@Override
-	public BlogDto getBlogById(Long id) {
+	public BlogDto getBlogById(UUID id) {
 
 		Blog blog = repo.getByBlogId(id);
 		if (blog != null) {

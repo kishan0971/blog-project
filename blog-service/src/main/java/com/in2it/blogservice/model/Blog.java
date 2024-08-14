@@ -2,6 +2,7 @@ package com.in2it.blogservice.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,8 +27,8 @@ import lombok.ToString;
 public class Blog {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 	
 	
 	@NotNull
@@ -66,7 +67,7 @@ public class Blog {
 	 
 	 private LocalDateTime updatedDateTime;
 	 
-	 private LocalDateTime deletedDateTime;
+//	 private LocalDateTime deletedDateTime;
 	 
 	 private List<String> mediaFile;
 	 

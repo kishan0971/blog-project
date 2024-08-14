@@ -1,5 +1,7 @@
 package com.in2it.blogservice.dto;
 
+import java.util.UUID;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,11 +16,11 @@ import lombok.NoArgsConstructor;
 public class BlogUpdateDto {
 
 	@NotNull
-	private long id;
+	private UUID id;
 	
 	private String title;
 	
-	@NotBlank(message = "content cannot be blank")
+//	@NotBlank(message = "content cannot be blank")
 	private String content;
 	
 	private String visiblity;

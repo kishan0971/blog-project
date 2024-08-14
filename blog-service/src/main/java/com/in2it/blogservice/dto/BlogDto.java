@@ -3,6 +3,7 @@ package com.in2it.blogservice.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +30,7 @@ public class BlogDto {
 	
 
 	@Hidden
-	private long id;
+	private UUID id;
 	
 	@NotNull
 	private long departmentId;

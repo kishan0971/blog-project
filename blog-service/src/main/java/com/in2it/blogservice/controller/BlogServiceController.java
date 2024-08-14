@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -78,20 +79,20 @@ public class BlogServiceController {
 
 	@PutMapping("/updateLike")
 	@Operation(summary = "update like count")
-	public ResponseEntity<BlogDto> updateLike(@RequestParam Long blogId, @RequestParam Long totalLikeCount) {
+	public ResponseEntity<BlogDto> updateLike(@RequestParam UUID blogId, @RequestParam Long totalLikeCount) {
 		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateLike(totalLikeCount, blogId));
 	}
 
 	@PutMapping("/updateComment")
 	
 	@Operation(summary = "update comment count")
-	public ResponseEntity<BlogDto> updateComment(@RequestParam Long blogId, @RequestParam Long totalCommentCount) {
+	public ResponseEntity<BlogDto> updateComment(@RequestParam UUID blogId, @RequestParam Long totalCommentCount) {
 		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.updateComment(totalCommentCount, blogId));
 	}
 
 	@DeleteMapping("/deleteByBlogId/{blogId}")
 	@Operation(summary = "delete blog by blogId")
-	public ResponseEntity<Boolean> deleteBlog(@PathVariable Long blogId, @RequestParam String deletedBy) {
+	public ResponseEntity<Boolean> deleteBlog(@PathVariable UUID blogId, @RequestParam String deletedBy) {
 
 		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlog(blogId, deletedBy));
 
@@ -99,7 +100,7 @@ public class BlogServiceController {
 
 	@DeleteMapping("/deleteByTitle/{title}")
 	@Operation(summary = "delete blog by title")
-	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title, @RequestParam Long blogId) {
+	public ResponseEntity<Boolean> deleteBlogBytitle(@PathVariable String title, @RequestParam UUID blogId) {
 		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.deleteBlogByTitle(title, blogId));
 	}
 
@@ -124,7 +125,7 @@ public class BlogServiceController {
 
 	@GetMapping("/getByBlogId/{blogId}")
 	@Operation(summary = "Get a blog by blogId", description = "Returns a blog as per the blogId.")
-	public ResponseEntity<BlogDto> getBlogById(@PathVariable(value = "blogId") @Valid Long blogId) {
+	public ResponseEntity<BlogDto> getBlogById(@PathVariable(value = "blogId") @Valid UUID blogId) {
 		return ResponseEntity.status(HttpStatus.OK).body(serviceImpl.getBlogById(blogId));
 	}
 
